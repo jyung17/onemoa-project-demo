@@ -26,7 +26,9 @@ public class App {
   
   @GetMapping("index")
   public String welcome2(@CookieValue(name = "email", defaultValue = "") String email, Model model) {
+    System.out.println("email = " + email);
     model.addAttribute("email", email);
+    System.out.println("model = " + model);
     return "index";
   }
   

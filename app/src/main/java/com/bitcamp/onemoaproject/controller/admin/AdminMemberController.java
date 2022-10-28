@@ -24,7 +24,7 @@ public class AdminMemberController {
     System.out.println(model);
   }
   
-  @GetMapping("member/list")
+  @GetMapping("memberlist")
   public void memberList(Model model) throws Exception {
     model.addAttribute("members", adminMemberService.memberList());
     System.out.println(model);

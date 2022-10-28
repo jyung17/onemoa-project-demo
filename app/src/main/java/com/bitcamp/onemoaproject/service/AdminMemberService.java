@@ -7,5 +7,5 @@ import java.util.List;
 public interface AdminMemberService {
   List<AdminMember> list() throws Exception;
   
-  List<Member>
+  List<Member> memberList() throws Exception;
 }

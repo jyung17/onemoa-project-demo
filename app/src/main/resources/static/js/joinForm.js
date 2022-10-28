@@ -83,11 +83,12 @@ $(function() {
       data: {
         nickname: nickname
       },
-      success: function(data) {
-        if (data == "false") {
+      success: function(result) {
+        if (result == "false") {
           document.getElementById("nicknameCheckBox").value = "중복된 닉네임입니다.";
           document.getElementById("nicknameCheckBox").style.display = "block";
           document.getElementById("nickname").focus();
+          isnickname = false;
           return false;
         } else {
           document.getElementById("nicknameCheckBox").value = "사용가능한 닉네임입니다.";
@@ -103,11 +104,11 @@ $(function() {
 // 이메일 인증번호 처리
 $(function() {
   var email_auth_cd = "";
-  var regExp = /\w+([-+.]\w+)*@\w+([-.]\w+)*\.[a-zA-Z]{2,4}$/;
+  const regExp = /\w+([-+.]\w+)*@\w+([-.]\w+)*\.[a-zA-Z]{2,4}$/;
 
 
   $(".email_auth_btn").click(function() {
-    var email = $("#joinEmail").val();
+    const email = $("#joinEmail").val();
 
     if (email == "") {
       document.getElementById("emailAuthCheckBox").style.display = "block";

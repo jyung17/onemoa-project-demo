@@ -17,8 +17,8 @@
     <result column="detail_addr" property="detailAddr"/>
     <result column="jno" property="jobNo"/>
     <result column="bank" property="bank"/>
-    <result column="acount" property="account"/>
-    <result column="profil" property="profile"/>
+    <result column="account" property="account"/>
+    <result column="profile" property="profile"/>
     <result column="token" property="token"/>
     <result column="status" property="status"/>
   </resultMap>
@@ -37,8 +37,8 @@
     detail_addr,
     jno,
     bank,
-    acount,
-    profil,
+    account,
+    profile,
     token,
     status
     )
@@ -73,22 +73,13 @@
   </select>
 
   <select id="findAll" resultMap="memberMap">
-    select
-    mno,
-    name,
-    email
-    from
-    member
-    order by
-    name
+    select mno, email, nick, name, tel, cdt, pstno, base_addr, detail_addr, jno, bank, acount, profil, status from member order by mno;
   </select>
 
   <select id="findByEmailPassword" resultMap="memberMap">
     select
-    mno,
-    name,
     email,
-    cdt
+    pwd
     from
     member
     where

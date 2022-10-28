@@ -23,14 +23,14 @@ public class AuthController {
   
   @ResponseBody
   @PostMapping("login")
-  public String login(String email, String password, String saveEmail, HttpServletRequest request, Model model, HttpServletResponse response, HttpSession session)
+  public String login(String email, String password, String saveEmail, HttpServletRequest request, HttpServletResponse response, HttpSession session)
       throws Exception {
     Member member = memberService.get(email, password);
 
     if (member != null) {
       session.setAttribute("loginMember", member);
     }
-    
+
     Cookie cookie = new Cookie("email", email);
     if (saveEmail == null) {
       cookie.setMaxAge(0);
@@ -39,8 +39,6 @@ public class AuthController {
     }
 
     response.addCookie(cookie);
-
-    model.addAttribute("member", member);
 
     if (member == null) {
       return "false";
