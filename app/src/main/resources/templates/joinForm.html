@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>onemoa v</title>
+  <link href="css/onemoa.css" rel="stylesheet">
+</head>
+<body>
+<div class="login-header">
+  <a href="/onemoa"><p class="logo">ONEMOA</p></a>
+</div>
+
+<form id="join_frm" action="member/add" method="post">
+  <div class="joinForm-flex-container">
+    <div class="joinForm-grid-container">
+      <p class="joinp">딱 이것만 작성하면 가입완료!</p>
+      <div class="joinForm-grid-item">
+        <p>이름 <span style="color: red">*</p>
+      </div>
+      <div class="joinForm-grid-item">
+        <input
+            class="name-input"
+            type="text"
+            name="name"
+            id="joinname"
+            placeholder="이름을 입력해 주세요"
+            maxlength="20"
+            required
+        />
+      </div>
+      <div class="joinForm-grid-item">
+        <p>닉네임 <span style="color: red">*</p>
+      </div>
+      <div class="joinForm-grid-item">
+        <input
+            class="nickname-input"
+            type="text"
+            name="nickname"
+            id="nickname"
+            placeholder="닉네임을 입력해 주세요"
+            maxlength="20"
+            required
+        />
+        <button type="button" id="nicknameCheckBtn" class="nickname_check_btn">
+          중복검사
+        </button>
+      </div>
+      <div class="joinForm-grid-item">
+        <input type="text" id="nicknameCheckBox" required value="" readonly/>
+      </div>
+      <div class="joinForm-grid-item">
+        <p>이메일 <span style="color: red">*</p>
+      </div>
+      <div class="joinForm-grid-item">
+        <div class="mail-input-box">
+          <input
+              class="email-input"
+              type="email"
+              name="email"
+              id="joinEmail"
+              placeholder="이메일을 입력해 주세요"
+              maxlength="30"
+              required
+          />
+          <button type="button" id="email_auth_btn" class="email_auth_btn">
+            인증번호 받기
+          </button>
+        </div>
+      </div>
+      <div class="joinForm-grid-item" id="email-auth-box">
+        <input
+            class="mail-input-check"
+            id="email-auth-key"
+            name="emailAuthkey"
+            placeholder="인증번호 입력"
+        />
+        <button
+            type="button"
+            id="email_auth_check_btn"
+            class="email_auth_check_btn"
+        >
+          인증하기
+        </button>
+      </div>
+      <div class="joinForm-grid-item">
+        <input
+            type="text"
+            id="emailAuthCheckBox"
+            required
+            value=""
+            readonly/>
+      </div>
+      <div class="joinForm-grid-item">
+        <p>비밀번호 <span style="color: red">*</p>
+      </div>
+      <div class="joinForm-grid-item">
+        <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="비밀번호를 입력해주세요.(8자리 이상)"
+            required
+        />
+      </div>
+      <div class="joinForm-grid-item">
+        <input
+            type="password"
+            id="password-ck"
+            placeholder="비밀번호를 한번 더 입력해 주세요."
+            required
+        />
+      </div>
+      <div class="joinForm-grid-item">
+        <input
+            type="text"
+            id="password-cked"
+            required
+            value=""
+            readonly />
+      </div>
+      <div class="joinForm-grid-item">
+        <p>우편번호 <span style="color: red">*</p>
+      </div>
+      <div class="joinForm-grid-item">
+        <div class="address">
+          <input
+              type="text"
+              id="sample6_postcode"
+              name="postNo"
+              placeholder="우편번호"
+              required
+          />
+          <input
+              type="button"
+              class="joinForm-postcode-bnt"
+              onclick="sample6_execDaumPostcode()"
+              value="우편번호 찾기"
+          /><br />
+          <input
+              type="text"
+              id="sample6_address"
+              name="baseAddr"
+              placeholder="도로명주소"
+              required
+          /><br />
+          <input
+              type="text"
+              id="sample6_detailAddress"
+              name="detailAddr"
+              placeholder="상세주소"
+              required
+          />
+        </div>
+      </div>
+      <div class="joinForm-grid-item">
+        <p>직업 <span style="color: red">*</p>
+      </div>
+      <div class="joinForm-grid-item">
+        <select id="jobNo" name="jobNo" class="job">
+          <option value="0" selected>직업을 선택해주세요.</option>
+          <option value="1">프리랜서</option>
+          <option value="2">직장인</option>
+          <option value="3">소상공인</option>
+          <option value="4">스타트업 창업</option>
+          <option value="5">대학(원)생</option>
+          <option value="6">취업준비생</option>
+        </select>
+      </div>
+      <div class="joinForm-grid-item">
+        <input
+            type="text"
+            id="jobNoCheckBox"
+            required
+            value=""
+            readonly />
+      </div>
+      <div class="joinForm-grid-item">
+        <p>관심사 선택 <span style="color: red">*</p>
+      </div>
+      <div class="interest-multiselect">
+        <div class="interest-selectBox">
+          <div class="interest" onclick="showInterestCheckboxes()">
+            <p>관심사를 선택해 주세요.</p>
+          </div>
+          <div id="interest-checkboxes">
+            <input type="checkbox" name="interests" value="010000" /><span>디자인</span><br />
+            <input type="checkbox" name="interests" value="020000"/><span>IT·프로그래밍</span><br />
+            <input type="checkbox" name="interests" value="030000"/><span>영상·사진·음향</span><br />
+            <input type="checkbox" name="interests" value="040000"/><span>번역·통역</span><br />
+            <input type="checkbox" name="interests" value="050000"/><span>영상·사진·음향</span><br />
+            <input type="checkbox" name="interests" value="060000"/><span>문서·글쓰기</span><br />
+            <input type="checkbox" name="interests" value="070000"/><span>비즈니스컨설팅</span><br />
+            <input type="checkbox" name="interests" value="080000"/><span>주문제작</span><br />
+          </div>
+        </div>
+      </div>
+      <div class="joinForm-grid-item">
+        <button type="submit" class="joinForm-footer-bnt" id="join" >회원가입하기</button>
+        <button class="joinForm-footer-bnt" onclick="location.href='/onemoa/'">취소</a></button>
+      </div>
+      <div class="joinForm-grid-item">
+        <input
+            type="hidden"
+            id="profile"
+            name="profile"
+            value="true"
+            required
+            readonly
+        />
+      </div>
+    </div>
+  </div>
+</form>
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="js/joinForm.js"></script>
+</body>
+</html>
