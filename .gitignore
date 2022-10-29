@@ -214,4 +214,4 @@ build
 
 # intelliJ
 .idea
-application.properties
+application-smtp.properties
