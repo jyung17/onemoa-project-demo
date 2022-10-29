@@ -214,4 +214,4 @@ build
 
 # intelliJ
 .idea
-*.properties
+application.properties
