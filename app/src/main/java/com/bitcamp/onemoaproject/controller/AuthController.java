@@ -1,25 +1,28 @@
 package com.bitcamp.onemoaproject.controller;
 
+import com.bitcamp.onemoaproject.service.MailService;
 import com.bitcamp.onemoaproject.service.MemberService;
+import com.bitcamp.onemoaproject.vo.Mail;
 import com.bitcamp.onemoaproject.vo.Member;
 import java.util.Random;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class AuthController {
+  
+  @Autowired
   MemberService memberService;
   
-  public AuthController(MemberService memberService) {
-    this.memberService = memberService;
-  }
+  @Autowired
+  MailService mailService;
   
   @ResponseBody
   @PostMapping("login")
@@ -76,25 +79,11 @@ public class AuthController {
     Random random = new Random();
     int checkNum = random.nextInt(888888) + 111111;
     
-    /* 이메일 보내기 */
-    String setFrom = "자신의 이메일을 입력해주세요";
-    String toMail = email;
-    String title = "회원가입 인증 이메일 입니다.";
-    String content = "홈페이지를 방문해주셔서 감사합니다." + "<br><br>" + "인증 번호는 " + checkNum + "입니다." + "<br>"
-        + "해당 인증번호를 인증번호 확인란에 기입하여 주세요.";
-    System.out.println(toMail);
-    //    try {
-    //      MimeMessage message = mailSender.createMimeMessage();
-    //      MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
-    //      helper.setFrom(setFrom);
-    //      helper.setTo(toMail);
-    //      helper.setSubject(title);
-    //      helper.setText(content,true);
-    //      mailSender.send(message);
-    //    }catch(Exception e) {
-    //      e.printStackTrace();
-    //    }
-    System.out.println(Integer.toString(checkNum));
+    Mail mail = new Mail();
+    mail.setAddress(email);
+    mail.setTitle("[onemoa] 이메일 계정 인증");
+    mail.setCheckNum(checkNum);
+    mailService.sendTemplateMessage(mail);
     return Integer.toString(checkNum);
   }
 }
