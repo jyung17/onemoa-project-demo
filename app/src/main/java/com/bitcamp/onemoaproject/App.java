@@ -20,21 +20,9 @@ public class App {
   }
 
   @GetMapping("/")
-  public String welcome() {
-    return "index";
-  }
-  
-  @GetMapping("index")
-  public String welcome2(@CookieValue(name = "email", defaultValue = "") String email, Model model) {
-    System.out.println("email = " + email);
+  public String welcome(@CookieValue(name = "email", defaultValue = "") String email, Model model) {
     model.addAttribute("email", email);
-    System.out.println("model = " + model);
     return "index";
-  }
-  
-  @GetMapping("/contestTeam")
-  public String welcome2() {
-    return "contestTeam";
   }
   
   @GetMapping("joinform")

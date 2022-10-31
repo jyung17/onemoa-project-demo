@@ -1,17 +1,17 @@
-package com.bitcamp.onemoaproject.vo;
+package com.bitcamp.onemoaproject.vo.contest;
 
 import java.sql.Date;
 
 public class Contest {
-  private int ctstno;
-  private int orgno;
-  private int ctgno;
+  private int ctstNo;
+  private int orgNo;
+  private int ctgNo;
   private String title;
   private String subCont;
-  private Date date;
-  private Date sdate;
-  private Date edate;
-  private int vwcnt;
+  private Date createdDate;
+  private Date sDate;
+  private Date eDate;
+  private int vw_cnt;
   private String org;
   private String appl;
   private String cont;
@@ -20,19 +20,22 @@ public class Contest {
   private String qual;
   private boolean team;
   private int reward;
+  private ContestOrg contOrg;
+  private ContestCategory contCategory;
+  
   
   @Override
   public String toString() {
     return "Contest{" +
-        "ctstno=" + ctstno +
-        ", orgno=" + orgno +
-        ", ctgno=" + ctgno +
+        "ctstNo=" + ctstNo +
+        ", orgNo=" + orgNo +
+        ", ctgNo=" + ctgNo +
         ", title='" + title + '\'' +
         ", subCont='" + subCont + '\'' +
-        ", date=" + date +
-        ", sdate=" + sdate +
-        ", edate=" + edate +
-        ", vwcnt=" + vwcnt +
+        ", createdDate=" + createdDate +
+        ", sDate=" + sDate +
+        ", eDate=" + eDate +
+        ", vw_cnt=" + vw_cnt +
         ", org='" + org + '\'' +
         ", appl='" + appl + '\'' +
         ", cont='" + cont + '\'' +
@@ -41,31 +44,33 @@ public class Contest {
         ", qual='" + qual + '\'' +
         ", team=" + team +
         ", reward=" + reward +
+        ", contOrg=" + contOrg +
+        ", contCategory=" + contCategory +
         '}';
   }
   
-  public int getCtstno() {
-    return ctstno;
+  public int getCtstNo() {
+    return ctstNo;
   }
   
-  public void setCtstno(int ctstno) {
-    this.ctstno = ctstno;
+  public void setCtstNo(int ctstNo) {
+    this.ctstNo = ctstNo;
   }
   
-  public int getOrgno() {
-    return orgno;
+  public int getOrgNo() {
+    return orgNo;
   }
   
-  public void setOrgno(int orgno) {
-    this.orgno = orgno;
+  public void setOrgNo(int orgNo) {
+    this.orgNo = orgNo;
   }
   
-  public int getCtgno() {
-    return ctgno;
+  public int getCtgNo() {
+    return ctgNo;
   }
   
-  public void setCtgno(int ctgno) {
-    this.ctgno = ctgno;
+  public void setCtgNo(int ctgNo) {
+    this.ctgNo = ctgNo;
   }
   
   public String getTitle() {
@@ -84,36 +89,36 @@ public class Contest {
     this.subCont = subCont;
   }
   
-  public Date getDate() {
-    return date;
+  public Date getCreatedDate() {
+    return createdDate;
   }
   
-  public void setDate(Date date) {
-    this.date = date;
+  public void setCreatedDate(Date createdDate) {
+    this.createdDate = createdDate;
   }
   
-  public Date getSdate() {
-    return sdate;
+  public Date getsDate() {
+    return sDate;
   }
   
-  public void setSdate(Date sdate) {
-    this.sdate = sdate;
+  public void setsDate(Date sDate) {
+    this.sDate = sDate;
   }
   
-  public Date getEdate() {
-    return edate;
+  public Date geteDate() {
+    return eDate;
   }
   
-  public void setEdate(Date edate) {
-    this.edate = edate;
+  public void seteDate(Date eDate) {
+    this.eDate = eDate;
   }
   
-  public int getVwcnt() {
-    return vwcnt;
+  public int getVw_cnt() {
+    return vw_cnt;
   }
   
-  public void setVwcnt(int vwcnt) {
-    this.vwcnt = vwcnt;
+  public void setVw_cnt(int vw_cnt) {
+    this.vw_cnt = vw_cnt;
   }
   
   public String getOrg() {
@@ -178,5 +183,21 @@ public class Contest {
   
   public void setReward(int reward) {
     this.reward = reward;
+  }
+  
+  public ContestOrg getContOrg() {
+    return contOrg;
+  }
+  
+  public void setContOrg(ContestOrg contOrg) {
+    this.contOrg = contOrg;
+  }
+  
+  public ContestCategory getContCategory() {
+    return contCategory;
+  }
+  
+  public void setContCategory(ContestCategory contCategory) {
+    this.contCategory = contCategory;
   }
 }

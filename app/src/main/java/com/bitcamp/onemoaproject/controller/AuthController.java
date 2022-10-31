@@ -40,7 +40,7 @@ public class AuthController {
     } else {
       cookie.setMaxAge(60*60*24*7);
     }
-
+    
     response.addCookie(cookie);
 
     if (member == null) {
@@ -52,14 +52,13 @@ public class AuthController {
   @GetMapping("logout")
   public String logout(HttpSession session) throws Exception {
     session.invalidate(); // 현재 세션을 무효화시킨다.
-    return "redirect:/index";
+    return "redirect:/";
   }
 
   @ResponseBody
   @PostMapping("/nicknamecheck")
   public String nickNameCheck(String nickname) throws Exception {
     Member member = memberService.getNickName(nickname);
-    System.out.println(member);
     if (member != null) {
       return "false";
     }
