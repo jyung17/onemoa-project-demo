@@ -5,15 +5,17 @@
     <title>onemoa contestTeam</title>
     <link href="../css/onemoa.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <!-- jquery-cookie 관련 라이브러리 추가 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
     <script src="../js/onemoa.js"></script>
+    <script src="../js/login.js"></script>
   </head>
   <body style="overflow-x: hidden;">
-
     <!-- login modal -->
     <div class="modal"style="position: absolute; z-index: 1;">
       <div class="modal_body">
         <div calss="login_container">
-          <button class="closebtn"><img src=".../img/x.png"></button>
+          <button class="closebtn"><img src="../img/x.png"></button>
           <p>로그인</p>
           <form action='login' method="post">
             <table class="input_login" >
@@ -36,7 +38,7 @@
             <label for="label-a"><input type="checkbox" name="saveEmail" id="email2">이메일 유지<br></label>
             <p class="find"><a href = "#">아이디 찾기</a> / <a href = "#">패스워드 찾기</a></p>
             <p>
-              <button type='button' class="loginbtn" id="adminCheck"><img src="img/loginbtn.png"></button>
+              <button type='button' class="loginbtn" id="adminCheck"><img src="../img/loginbtn.png"></button>
             </p>
           </form>
           <div class="sns">
@@ -65,7 +67,7 @@
 
       <div class="menu">
         <ul class="secnav">
-          <li><a href="contest/contestTeam"><p>공모전</p></a></li>
+          <li><a href="/onemoa/contest/contestTeam?no=1"><p>공모전</p></a></li>
           <li><a href="#"><p>재능판매</p></a></li>
         </ul>
       </div>
@@ -78,8 +80,8 @@
 
       <div class="contestctg">
         <ul class="conctg">
-          <li><a href="#">개인전</a></li>
-          <li><a href="#">팀전</a></li>
+          <li><a href="/onemoa/contest/contestTeam?no=1">개인전</a></li>
+          <li><a href="/onemoa/contest/contestTeam?no=2">팀전</a></li>
         </ul>
         <ul class="contype">
           <li><a href="#">전체</a></li>
@@ -108,18 +110,18 @@
                 <ul class="detail">
                   <li>
                     <div class="detailimg">
-                      <img src="../img/conD.png">
+                      <img id="contestDetailImage" src="../img/condico.png">
                     </div>
                   </li>
                   <li>
                     <table class="contable">
                       <tr>
                         <td>주최</td>
-                        <td id="contestDetailOrg">해외자원개발진흥재단</td>
+                        <td id="contestDetailContOrg">해외자원개발진흥재단</td>
                       </tr>
                       <tr>
                         <td>주관</td>
-                        <td id="contestDetailOrg2">해외자원개발진흥재단</td>
+                        <td id="contestDetailOrg">해외자원개발진흥재단</td>
                       </tr>
                       <tr>
                         <td>공모전분야</td>
@@ -147,7 +149,7 @@
                       </tr>
                       <tr>
                         <td>[첨부파일]</td>
-                        <td>
+                        <td id="xNameList">
                           <span>[첨부파일]</span>
                           <span>제8회 해외자원개발 바로알기 공모전 참가 신청서</span>
                           <span>및 개인정보 이용 동의서.hwp</span>
@@ -167,22 +169,22 @@
               <!-- 상세정보 -->
               <div class="contestIn">
                 <div class="basicInformation">
-                  <img src="../img/condico.png">
+                  <img  src="../img/condico.png">
                   <p>공모전 상세정보</p>
                 </div>
 
                 <table class="contestInformation">
                   <tr>
                     <td><span>></span>공모전명</td>
-                    <td>디자인 콘테스트</td>
+                    <td id="contestDetailTitle">디자인 콘테스트</td>
                   </tr>
                   <tr>
                     <td><span>></span>주최명</td>
-                    <td>해외자원개발진흥재단</td>
+                    <td id="contestDetailOrg2">해외자원개발진흥재단</td>
                   </tr>
                   <tr>
                     <td><span>></span>공모전 설명</td>
-                    <td>저희 회사는 한국 식품을 해외로 수출하고 있는 수출전문업체입니다. 본 라면의 주 타겟층은 한국 식품을 좋아하고 한국 라면을 좋아하는 해외 일반 20,30대입니다. 지금까지 많은 제품들을 디자인 업체를 통해서 해왔지만 항상 먼가가 아쉬웠기에 원모아를 통해서 디자인 공모전을 해보고자 합니다. 정말 정말 많은 분들의 참여를 바랍니다.</td>
+                    <td id="contestDetailCont">저희 회사는 한국 식품을 해외로 수출하고 있는 수출전문업체입니다. 본 라면의 주 타겟층은 한국 식품을 좋아하고 한국 라면을 좋아하는 해외 일반 20,30대입니다. 지금까지 많은 제품들을 디자인 업체를 통해서 해왔지만 항상 먼가가 아쉬웠기에 원모아를 통해서 디자인 공모전을 해보고자 합니다. 정말 정말 많은 분들의 참여를 바랍니다.</td>
                   </tr>
                 </table>
 
@@ -479,14 +481,17 @@
             <a href="#"><ul class="con" data-th-id="${contest.ctstNo}">
               <li>
                 <div class="conimg">
-                  <img src="../img/contestimg.png">
+<!--                  <img id="contestListImage" data-th-src="${/onemoa/contest/files/{path}(path=${contest.thumbNail})}" src="../img/contestimg.png">-->
+                  <img id="contestListImage" data-th-src="${'/onemoa/contest/files/'+contest.thumbNail}">
                 </div>
               </li>
               <li>
                 <div class="contestName">
+                  <div class="contestHead">
                   <p data-th-text="${contest.contCategory.categoryName}">로고디자인</p>
                   <p>|</p>
                   <p data-th-text="${contest.title}">치킨브랜드에 어울리는 브랜드명</p>
+                  </div>
                   <div class="contesttext">
                     <p data-th-text="${contest.subCont}">전문가님의 산뜻한 치킨브랜드 네이밍 부탁드립니다. 이름을 들었을 때 무언가 맛있는 느낌이 와도 좋지만 동떨어진 이름이지만<span>
                       기억하기 쉽고 어감이 좋으면 괜찮습니다. 바른 기본 올바른 전통 등등 이런 느낌이 연상되는 캐릭터명 같은 것도 괜찮습니다.</span>
@@ -498,7 +503,7 @@
               <li>
                 <div class="contestD">
                   <p>총상금<span>만원</span><span data-th-text="${contest.reward}">100</span></p>
-                  <p>남은기간<span>14일</span></p>
+                  <p>접수마감일<span data-th-text="${contest.eDate}">14일</span></p>
                   <p>조회수<span data-th-text="${contest.vw_cnt}">303회</span></p>
                 </div>
               </li>
@@ -530,8 +535,12 @@
       </div>
     </footer>
 
-
-
+    <script>
+      // TODO 1. JQuery 사용해서 쿠키값안에 email 값 찾아서 login시 email ID 값에 추가.
+      // TODO 2. cookie 2번
+      console.log($.cookie("email"));
+      $("#email").val($.cookie("email"));
+    </script>
 
     <script>
 
@@ -572,14 +581,33 @@
             data: { contestNumber: contestNumber},
             success: function (result) {
               console.log(result);
+              $("#contestDetailContOrg").text(result.contOrg.orgName);
               $("#contestDetailOrg").text(result.org);
               $("#contestDetailOrg2").text(result.org);
               $("#contestDetailCategory").text(result.contCategory.categoryName);
+              $("#contestDetailTitle").text(result.title);
               $("#contestDetailAppl").text(result.appl);
               $("#contestDetailQual").text(result.qual);
-              $("#contestDetailReceptionPeriod").text(result.sdate + "~" + result.edate);
+              $("#contestDetailReceptionPeriod").text(result.sDate + "~" + result.eDate);
               $("#contestDetailReward").text(result.reward + "만원");
               $("#contestDetailPage").html("<a href='"+ result.page + "'>" + result.page +"</a>");
+              $("#contestDetailCont").text(result.cont);
+
+              let arr = result.attachedFiles;
+              let spanList = "";
+              let detailImg = document.getElementById("contestDetailImage");
+              let imgPath = "";
+              console.log(arr);
+              if (arr.length != 0) {
+                for (let i = 0; i < arr.length; i++) {
+                  spanList += "<a href='" + "/onemoa/contest/files/" + arr[i].filepath + "'>"
+                      + "<span>" + arr[i].filename + "</span>" + "</a>";
+                  imgPath = arr[0].filepath;
+                }
+                var td = document.getElementById("xNameList");
+                td.innerHTML = spanList;
+                detailImg.src="/onemoa/contest/files/" + imgPath;
+              }
             },
           });
 
@@ -776,30 +804,6 @@
         var trHtml2 = $(this).parent();
         trHtml2.remove(); //tr 테그 삭제
     });
-
-      // 로그인 ajax 비동기 처리
-      $(".loginbtn").click(function () {
-        var email = $("#email").val();
-        var password = $("#password").val();
-        var saveEmail = $("input[type=checkbox][name=saveEmail]:checked").val();
-        console.log(saveEmail);
-
-        $.ajax({
-          type: "POST",
-          url: "/onemoa/login",
-          data: { email: email, password: password, saveEmail: saveEmail},
-          success: function (result) {
-            if(result == "true") {
-              window.location.reload();
-            } else if (result == "false") {
-              document.getElementById("emailPasswordCheck").style.display = "block";
-              document.getElementById("emailPasswordCheck").value="이메일 또는 비밀번호가 일치하지 않습니다.";
-              document.getElementById("emailPasswordCheck").style.color="red";
-            }
-          },
-        });
-      });
-
     </script>
 
   </body>

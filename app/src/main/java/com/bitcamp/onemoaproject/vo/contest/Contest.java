@@ -1,6 +1,7 @@
 package com.bitcamp.onemoaproject.vo.contest;
 
 import java.sql.Date;
+import java.util.List;
 
 public class Contest {
   private int ctstNo;
@@ -20,9 +21,12 @@ public class Contest {
   private String qual;
   private boolean team;
   private int reward;
-  private ContestOrg contOrg;
-  private ContestCategory contCategory;
+  private String thumbNail; // thumbNail 첨부파일을 저장할 필드
+  private ContestOrg contOrg; // 공모전 기관명을 저장할 필드
+  private ContestCategory contCategory; // 공모전 카테고리를 저장할 필드
   
+  // 첨부파일을 저장할 필드
+  private List<AttachedFile> attachedFiles;
   
   @Override
   public String toString() {
@@ -44,8 +48,10 @@ public class Contest {
         ", qual='" + qual + '\'' +
         ", team=" + team +
         ", reward=" + reward +
+        ", thumbNail='" + thumbNail + '\'' +
         ", contOrg=" + contOrg +
         ", contCategory=" + contCategory +
+        ", attachedFiles=" + attachedFiles +
         '}';
   }
   
@@ -185,6 +191,14 @@ public class Contest {
     this.reward = reward;
   }
   
+  public String getThumbNail() {
+    return thumbNail;
+  }
+  
+  public void setThumbNail(String thumbNail) {
+    this.thumbNail = thumbNail;
+  }
+  
   public ContestOrg getContOrg() {
     return contOrg;
   }
@@ -199,5 +213,14 @@ public class Contest {
   
   public void setContCategory(ContestCategory contCategory) {
     this.contCategory = contCategory;
+  }
+  
+  public List<AttachedFile> getAttachedFiles() {
+    return attachedFiles;
+  }
+  
+  public void setAttachedFiles(
+      List<AttachedFile> attachedFiles) {
+    this.attachedFiles = attachedFiles;
   }
 }

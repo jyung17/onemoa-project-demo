@@ -25,6 +25,11 @@ public class App {
     return "index";
   }
   
+  @GetMapping("/index")
+  public String welcome2() {
+    return "indexFragments";
+  }
+  
   @GetMapping("joinform")
   public String joinForm() {
     return "joinForm";

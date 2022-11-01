@@ -9,4 +9,8 @@ public interface ContestDao {
   List<Contest> findAll();
   
   Contest findByNo(int contestNumber);
+  
+  int insert(Contest contest);
+  
+  int insertFiles(Contest contest);
 }
