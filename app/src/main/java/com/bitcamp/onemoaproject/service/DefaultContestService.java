@@ -19,6 +19,11 @@ public class DefaultContestService implements ContestService{
   }
   
   @Override
+  public List<Contest> listTeam(boolean no) throws Exception {
+    return contestDao.findByTeam(no);
+  }
+  
+  @Override
   public Contest get(int no) throws Exception {
     return contestDao.findByNo(no);
   }
@@ -31,7 +36,7 @@ public class DefaultContestService implements ContestService{
       throw new Exception("게시글 등록 실패!");
     }
     // 2) 첨부파일 등록
-    if (contest.getAttachedFiles().size() > 0) {
+    if (contest.getContestAttachedFiles().size() > 0) {
       System.out.println("contest = " + contest);
       contestDao.insertFiles(contest);
     }

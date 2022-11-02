@@ -1,5 +1,6 @@
 package com.bitcamp.onemoaproject.controller;
 
+import com.bitcamp.onemoaproject.vo.contest.ContestAttachedFile;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,32 +18,31 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.bitcamp.onemoaproject.service.ContestService;
-import com.bitcamp.onemoaproject.vo.contest.AttachedFile;
 import com.bitcamp.onemoaproject.vo.contest.Contest;
 
 @Controller
 @RequestMapping("contest")
 public class ContestController {
 
+  @Autowired
   ServletContext sc;
+  @Autowired
   ContestService contestService;
 
   public ContestController(ContestService contestService, ServletContext sc) {
     this.contestService = contestService;
     this.sc = sc;
   }
-
-//  @GetMapping("contestTeam")
-//  public String contestTeamList(Model model) throws Exception {
-//    model.addAttribute("contests", contestService.list());
-//    return "contest/contestTeam";
-//  }
   
   @GetMapping("contestTeam")
   public String contestTeamList(Model model, int no) throws Exception {
-//    Contest contest = contestService.get(no);
-    System.out.println("no = " + no);
-    model.addAttribute("contests", contestService.list());
+    if (no == 1) {
+      model.addAttribute("contests", contestService.listTeam(false));
+      return "contest/contestTeam";
+    } else if (no == 2) {
+      model.addAttribute("contests", contestService.listTeam(true));
+      return "contest/contestTeam";
+    }
     return "contest/contestTeam";
   }
 
@@ -50,36 +51,45 @@ public class ContestController {
   @ResponseBody
   public Contest contestTeamDetail(int contestNumber) throws Exception {
     Contest contest = contestService.get(contestNumber);
+    System.out.println("contest.getContestAttachedFiles() = " + contest.getContestAttachedFiles());
+    System.out.println("contest.getThumbNail() = " + contest.getThumbNail());
     return contest;
   }
 
-  // 공모전 리스트 출력 (임시 작업중)
-  @GetMapping("list")
+  // 관리자 페이지용 공모전 리스트 출력 (임시 작업중)
+  @GetMapping("contestList")
   public String list(Model model) throws Exception {
     model.addAttribute("contests", contestService.list());
     return "contest/contestList";
   }
 
-  // 공모전 글작성 폼
-  @GetMapping("contestform")
+  // 공모전 디테일
+  @GetMapping("contestDetail")
+  public Contest contestDetail(int ctstNo) throws Exception {
+    Contest contest = contestService.get(ctstNo);
+    System.out.println("contest.getAttachedFiles() = " + contest.getContestAttachedFiles());
+    return contest;
+  }
+
+  // 관리자 페이지용 공모전 글작성 폼
+  @GetMapping("contestForm")
   public void form() throws Exception {
     String dirPath2 = sc.getRealPath("/contest/files");
     System.out.println(dirPath2);
   }
 
-  
-  // 공모전 글작성
-  @PostMapping("add")
+  // 관리자 페이지용 공모전 글작성
+  @PostMapping("contestAdd")
   public String add(Contest contest, Part[] files, Part files2, HttpServletRequest request, HttpSession session)
       throws Exception {
-    contest.setAttachedFiles(saveAttachedFiles(files));
+    contest.setContestAttachedFiles(saveAttachedFiles(files));
     contest.setThumbNail(saveThumbNailFile(files2));
     System.out.println(contest);
     contestService.add(contest);
 
-    return "redirect:list";
+    return "redirect:contestList";
   }
-  
+
   // 공모전 썸네일 첨부파일 처리
   private String saveThumbNailFile(Part files2) throws IOException {
     String dirPath = sc.getRealPath("/contest/files");
@@ -88,10 +98,10 @@ public class ContestController {
     
     return filename;
   }
-  
+
   // 공모전 일반 첨부파일 처리
-  private List<AttachedFile> saveAttachedFiles(Part[] files) throws IOException, ServletException {
-    List<AttachedFile> attachedFiles = new ArrayList<>();
+  private List<ContestAttachedFile> saveAttachedFiles(Part[] files) throws IOException, ServletException {
+    List<ContestAttachedFile> contestAttachedFiles = new ArrayList<>();
     String dirPath = sc.getRealPath("/contest/files");
 
     for (Part part : files) {
@@ -102,8 +112,8 @@ public class ContestController {
       String filename = UUID.randomUUID().toString(); // 첨부파일의 UUID
       String realFilename = part.getSubmittedFileName(); // 첨부파일의 실제파일명 (KakaoTalk_Photo_2022-09-15-20-31-04.jpeg)
       part.write(dirPath + "/" + filename);
-      attachedFiles.add(new AttachedFile(filename, realFilename));
+      contestAttachedFiles.add(new ContestAttachedFile(realFilename, filename));
     }
-    return attachedFiles;
+    return contestAttachedFiles;
   }
 }

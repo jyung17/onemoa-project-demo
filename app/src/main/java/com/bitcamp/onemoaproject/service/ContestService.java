@@ -8,5 +8,7 @@ public interface ContestService {
   
   Contest get(int no) throws Exception;
   
+  List<Contest> listTeam(boolean no) throws Exception;
+  
   void add(Contest contest) throws Exception;
 }

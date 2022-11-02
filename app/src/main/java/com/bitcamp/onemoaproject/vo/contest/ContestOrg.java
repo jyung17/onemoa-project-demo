@@ -1,15 +1,16 @@
 package com.bitcamp.onemoaproject.vo.contest;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 public class ContestOrg {
   private int no;
   private String orgName;
   
-  @Override
-  public String toString() {
-    return "ContestOrg{" +
-        "no=" + no +
-        ", name=" + orgName +
-        '}';
+  public ContestOrg(int no, String orgName) {
+    this.no = no;
+    this.orgName = orgName;
   }
   
   public int getNo() {

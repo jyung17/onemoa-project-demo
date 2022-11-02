@@ -23,30 +23,30 @@
     <result column="reward" property="reward"/>
     <result column="thumbnail" property="thumbNail"/>
 
-    <!-- 조인 결과에서 같은 게시글에 대해 한 개의 회원 데이터를 담을 경우 -->
+    <!--  -->
     <association property="contOrg" javaType="contestOrg">
       <id column="orgno" property="no"/>
       <result column="coname" property="orgName"/>
     </association>
 
-    <!-- 조인 결과에서 같은 게시글에 대해 한 개의 회원 데이터를 담을 경우 -->
+    <!--  -->
     <association property="contCategory" javaType="contestCategory">
       <id column="ctgno" property="no"/>
       <result column="ccname" property="categoryName"/>
     </association>
 
-    <collection property="attachedFiles" ofType="attachedFile">
-      <id column="ctstfno" property="no"/>
-      <result column="fname" property="filename"/>
+    <collection property="contestAttachedFiles" ofType="contestAttachedFile">
+      <id column="ctstfno" property="ctstFno"/>
+      <result column="fname" property="fName"/>
       <result column="fpath" property="filepath"/>
     </collection>
   </resultMap>
 
-  <resultMap type="attachedFile" id="attachedFileMap">
-    <id column="ctstfno" property="no"/>
-    <result column="fname" property="filename"/>
+  <resultMap type="contestAttachedFile" id="contestAttachedFileMap">
+    <id column="ctstfno" property="ctstFno"/>
+    <result column="fname" property="fName"/>
     <result column="fpath" property="filepath"/>
-    <result column="ctstno" property="boardNo"/>
+    <result column="ctstno" property="ctstNo"/>
   </resultMap>
 
   <select id="findAll" resultMap="contestMap">
@@ -74,6 +74,32 @@
     join contest_organization co on contest.orgno = co.orgno;
   </select>
 
+  <select id="findByTeam" resultMap="contestMap">
+    select
+    ctstno,
+    co.name coname,
+    cc.name ccname,
+    title,
+    subcont,
+    cdt,
+    sdate,
+    edate,
+    vw_cnt,
+    org,
+    appl,
+    cont,
+    page,
+    size,
+    qual,
+    team,
+    reward,
+    thumbnail
+    from contest
+    join contest_category cc on contest.ctgno = cc.ctgno
+    join contest_organization co on contest.orgno = co.orgno
+    where team=#{value};
+  </select>
+
   <select id="findByNo" resultMap="contestMap">
     select
     cont.ctstno,
@@ -93,6 +119,7 @@
     cont.qual,
     cont.team,
     cont.reward,
+    cont.thumbnail,
     cf.ctstfno,
     cf.fname,
     cf.fpath
@@ -131,8 +158,8 @@
   <insert id="insertFiles" parameterType="contest">
     insert into contest_file(fname,fpath,ctstno)
     values
-    <foreach collection="attachedFiles" item="file" separator=",">
-      (#{file.filename},#{file.filepath},#{ctstNo})
+    <foreach collection="contestAttachedFiles" item="file" separator=",">
+      (#{file.fName},#{file.filepath},#{ctstNo})
     </foreach>
   </insert>
 

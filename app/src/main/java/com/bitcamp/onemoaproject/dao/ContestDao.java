@@ -8,6 +8,8 @@ import org.apache.ibatis.annotations.Mapper;
 public interface ContestDao {
   List<Contest> findAll();
   
+  List<Contest> findByTeam(boolean no);
+  
   Contest findByNo(int contestNumber);
   
   int insert(Contest contest);

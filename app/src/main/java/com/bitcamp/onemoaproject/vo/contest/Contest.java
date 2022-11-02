@@ -26,7 +26,7 @@ public class Contest {
   private ContestCategory contCategory; // 공모전 카테고리를 저장할 필드
   
   // 첨부파일을 저장할 필드
-  private List<AttachedFile> attachedFiles;
+  private List<ContestAttachedFile> contestAttachedFiles;
   
   @Override
   public String toString() {
@@ -51,7 +51,7 @@ public class Contest {
         ", thumbNail='" + thumbNail + '\'' +
         ", contOrg=" + contOrg +
         ", contCategory=" + contCategory +
-        ", attachedFiles=" + attachedFiles +
+        ", attachedFiles=" + contestAttachedFiles +
         '}';
   }
   
@@ -215,12 +215,12 @@ public class Contest {
     this.contCategory = contCategory;
   }
   
-  public List<AttachedFile> getAttachedFiles() {
-    return attachedFiles;
+  public List<ContestAttachedFile> getContestAttachedFiles() {
+    return contestAttachedFiles;
   }
   
-  public void setAttachedFiles(
-      List<AttachedFile> attachedFiles) {
-    this.attachedFiles = attachedFiles;
+  public void setContestAttachedFiles(
+      List<ContestAttachedFile> contestAttachedFiles) {
+    this.contestAttachedFiles = contestAttachedFiles;
   }
 }

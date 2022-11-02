@@ -1,5 +1,9 @@
 package com.bitcamp.onemoaproject.vo.contest;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 public class ContestCategory {
   private int no;
   private String categoryName;
@@ -8,7 +12,7 @@ public class ContestCategory {
   public String toString() {
     return "ContestCategory{" +
         "no=" + no +
-        ", name='" + categoryName + '\'' +
+        ", categoryName='" + categoryName + '\'' +
         '}';
   }
   

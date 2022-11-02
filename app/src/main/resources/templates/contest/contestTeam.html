@@ -9,6 +9,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
     <script src="../js/onemoa.js"></script>
     <script src="../js/login.js"></script>
+    <script src="../js/contest.js"></script>
   </head>
   <body style="overflow-x: hidden;">
     <!-- login modal -->
@@ -162,7 +163,7 @@
 
               <div class="contestdtype">
                 <p onclick="team()"><a href="#">상세정보</a></p>
-                <p onclick="team()"><a href="#">팀원구해요</a></p>
+                <p id="contestTypeTeam" onclick="team()"><a href="#">팀원구해요</a></p>
                 <span></span>
               </div>
 
@@ -478,7 +479,7 @@
 
           <!-- 콘테스트 리스트-->
           <div data-th-each="contest : ${contests}">
-            <a href="#"><ul class="con" data-th-id="${contest.ctstNo}">
+            <a href="#"><ul class="con" data-th-id="${contest.ctstNo}" data-th-value="${contest.team}">
               <li>
                 <div class="conimg">
 <!--                  <img id="contestListImage" data-th-src="${/onemoa/contest/files/{path}(path=${contest.thumbNail})}" src="../img/contestimg.png">-->
@@ -568,6 +569,17 @@
       // 공모전 상세페이지
       $(".con").click(function () {
         let contestNumber = $(this).attr("id");
+        console.log(contestNumber);
+        let contestTeam = $(this).attr("value");
+
+        // 공모전 개인전이라면 상세보기에서 팀원구해요 태그 닫기
+        if(contestTeam == "true") {
+          document.querySelector("#contestTypeTeam").style.display = "none";
+        }
+        // 공모전 팀전이라면 상세보기에서 팀원구해요 태그 열기
+        if(contestTeam == "false") {
+          document.querySelector("#contestTypeTeam").style.display = "block";
+        }
 
         if ($('.modal2').css('display') == 'none'){
           $('.modal2').show();
@@ -575,10 +587,11 @@
           $('.modal4').hide();
           body.style.overflow = 'hidden';
 
+          // 공모전 상세보기 Ajax 비동기 통신
           $.ajax({
             type: "POST",
             url: "/onemoa/contest/contestTeam/detail",
-            data: { contestNumber: contestNumber},
+            data: { contestNumber: contestNumber}, // 공모전 id값을 서버에 전달
             success: function (result) {
               console.log(result);
               $("#contestDetailContOrg").text(result.contOrg.orgName);
@@ -592,21 +605,20 @@
               $("#contestDetailReward").text(result.reward + "만원");
               $("#contestDetailPage").html("<a href='"+ result.page + "'>" + result.page +"</a>");
               $("#contestDetailCont").text(result.cont);
+              // result.thumbNail값을 꺼내서 img의 src값 변경
+              $("#contestDetailImage").attr("src", "/onemoa/contest/files/" + result.thumbNail);
 
-              let arr = result.attachedFiles;
+              // 응답받은 result에서 contestAttachedFiles(첨부파일) 추출
+              // spanList : 첨부파일을 span 태그로 묶어서 td 태그 밑에 삽입
+              let arr = result.contestAttachedFiles;
               let spanList = "";
-              let detailImg = document.getElementById("contestDetailImage");
-              let imgPath = "";
-              console.log(arr);
               if (arr.length != 0) {
                 for (let i = 0; i < arr.length; i++) {
                   spanList += "<a href='" + "/onemoa/contest/files/" + arr[i].filepath + "'>"
-                      + "<span>" + arr[i].filename + "</span>" + "</a>";
-                  imgPath = arr[0].filepath;
+                      + "<span>" + arr[i].fName + "</span>" + "</a>";
                 }
                 var td = document.getElementById("xNameList");
                 td.innerHTML = spanList;
-                detailImg.src="/onemoa/contest/files/" + imgPath;
               }
             },
           });
