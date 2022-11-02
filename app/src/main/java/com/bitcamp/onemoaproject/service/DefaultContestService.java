@@ -2,6 +2,7 @@ package com.bitcamp.onemoaproject.service;
 
 import com.bitcamp.onemoaproject.dao.ContestDao;
 import com.bitcamp.onemoaproject.vo.contest.Contest;
+import com.bitcamp.onemoaproject.vo.contest.ContestAttachedFile;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,8 +25,8 @@ public class DefaultContestService implements ContestService{
   }
   
   @Override
-  public Contest get(int no) throws Exception {
-    return contestDao.findByNo(no);
+  public Contest get(int ctstNo) throws Exception {
+    return contestDao.findByNo(ctstNo);
   }
   
   @Transactional
@@ -68,5 +69,15 @@ public class DefaultContestService implements ContestService{
   
     // 2) 게시글 삭제
     return contestDao.delete(ctstno) > 0;
+  }
+  
+  @Override
+  public ContestAttachedFile getContestAttachedFile(int fileNo) throws Exception {
+    return contestDao.findFileByNo(fileNo);
+  }
+  
+  @Override
+  public boolean contestDeleteAttachedFile(int fileNo) throws Exception {
+    return contestDao.deleteFile(fileNo) > 0;
   }
 }

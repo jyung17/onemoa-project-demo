@@ -567,15 +567,14 @@
 
       // 공모전 상세페이지
       $(".con").click(function () {
-        let contestNumber = $(this).attr("id");
-        console.log(contestNumber);
-        let contestTeam = $(this).attr("value");
+        let contestNumber = $(this).attr("id"); // 공모전 번호
+        let contestTeam = $(this).attr("value"); // 공모전 팀여부(true/false)
 
-        // 공모전 개인전이라면 상세보기에서 팀원구해요 태그 닫기
+        // 공모전 개인전(false=0)이라면 상세보기 '팀원구해요' 태그 닫기
         if(contestTeam == "false") {
           document.querySelector("#contestTypeTeam").style.display = "none";
         }
-        // 공모전 팀전이라면 상세보기에서 팀원구해요 태그 열기
+        // 공모전 팀전(true=1)이라면 상세보기 '팀원구해요' 태그 열기
         if(contestTeam == "true") {
           document.querySelector("#contestTypeTeam").style.display = "block";
         }
@@ -590,25 +589,25 @@
           $.ajax({
             type: "POST",
             url: "/onemoa/contest/contestTeam/detail",
-            data: { contestNumber: contestNumber}, // 공모전 id값을 서버에 전달
+            data: { contestNumber: contestNumber}, // 공모전 번호를 서버에 전달
             success: function (result) {
               console.log(result);
-              $("#contestDetailContOrg").text(result.contOrg.orgName);
-              $("#contestDetailOrg").text(result.org);
-              $("#contestDetailOrg2").text(result.org);
-              $("#contestDetailCategory").text(result.contCategory.categoryName);
-              $("#contestDetailTitle").text(result.title);
-              $("#contestDetailAppl").text(result.appl);
-              $("#contestDetailQual").text(result.qual);
-              $("#contestDetailReceptionPeriod").text(result.sDate + "~" + result.eDate);
-              $("#contestDetailReward").text(result.reward + "만원");
-              $("#contestDetailPage").html("<a href='"+ result.page + "'>" + result.page +"</a>");
-              $("#contestDetailCont").text(result.cont);
+              $("#contestDetailContOrg").text(result.contOrg.orgName); // 공모전 주최기관이름(대기업,공공기관,자영업자)
+              $("#contestDetailOrg").text(result.org); // 공모전 주최기관명
+              $("#contestDetailOrg2").text(result.org); // 공모전 주최기관명
+              $("#contestDetailCategory").text(result.contCategory.categoryName); // 공모전 카테고리이름
+              $("#contestDetailTitle").text(result.title); // 공모전 제목
+              $("#contestDetailAppl").text(result.appl); // 공모전 접수방법(이메일)
+              $("#contestDetailQual").text(result.qual); // 공모전 참가자격
+              $("#contestDetailReceptionPeriod").text(result.sDate + "~" + result.eDate); // 공모전 시작일 ~ 종료일
+              $("#contestDetailReward").text(result.reward + "만원"); // 공모전 상금
+              $("#contestDetailPage").html("<a href='"+ result.page + "'>" + result.page +"</a>"); // 공모전 홈페이지
+              $("#contestDetailCont").text(result.cont); // 공모전 상세내용
               // result.thumbNail값을 꺼내서 img의 src값 변경
-              $("#contestDetailImage").attr("src", "/onemoa/contest/files/" + result.thumbNail);
+              $("#contestDetailImage").attr("src", "/onemoa/contest/files/" + result.thumbNail); // 공모전 썸네일
 
               // 응답받은 result에서 contestAttachedFiles(첨부파일) 추출
-              // spanList : 첨부파일을 span 태그로 묶어서 td 태그 밑에 삽입
+              // spanList : 첨부파일을 span 태그로 만들어서 td 태그 밑에 삽입
               let arr = result.contestAttachedFiles;
               let spanList = "";
               if (arr.length != 0) {

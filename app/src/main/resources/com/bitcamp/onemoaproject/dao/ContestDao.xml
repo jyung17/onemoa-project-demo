@@ -163,8 +163,6 @@
     </foreach>
   </insert>
 
-
-
   <update id="update" parameterType="contest">
     update contest set
     orgno=#{orgNo},
@@ -201,6 +199,23 @@
   <delete id="deleteFiles">
     delete from contest_file
     where ctstno=#{value}
+  </delete>
+
+  <select id="findFileByNo" resultMap="contestAttachedFileMap">
+    select
+      ctstfno,
+      fname,
+      fpath,
+      ctstno
+    from
+      contest_file
+    where
+      ctstfno = #{value}
+  </select>
+
+  <delete id="deleteFile">
+    delete from contest_file
+    where ctstfno=#{value}
   </delete>
 
 </mapper>

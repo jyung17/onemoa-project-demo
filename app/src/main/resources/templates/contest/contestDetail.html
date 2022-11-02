@@ -104,8 +104,8 @@
               <a href="files/test.gif"
                  data-th-href="@{files/{path}(path=${file.filepath})}"
                  data-th-text="${file.filepath}">test.gif</a>
-              [<a href="fileDelete?no=${file.ctstFno}"
-                  data-th-href="@{fileDelete(ctsfno=${file.ctstFno})}">삭제</a>]
+              [<a href="contestFileDelete?ctstfno=${file.ctstFno}"
+                  data-th-href="@{contestFileDelete(ctstfno=${file.ctstFno})}">삭제</a>]
             </li>
           </ul>
           파일 추가: <input name='files' type="file" multiple>

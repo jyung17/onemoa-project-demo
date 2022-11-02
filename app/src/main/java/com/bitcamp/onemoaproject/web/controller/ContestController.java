@@ -54,34 +54,32 @@ public class ContestController {
     return contest;
   }
 
-  // 관리자 페이지용 공모전 리스트 출력 (임시 작업중)
-  @GetMapping("contestList")
-  public String list(Model model) throws Exception {
-    model.addAttribute("contests", contestService.list());
-    return "contest/contestList";
-  }
-
-  // 공모전 디테일
+  // 공모전 상세정보(관리자 페이지)
   @GetMapping("contestDetail")
   public Contest contestDetail(int ctstNo) throws Exception {
     Contest contest = contestService.get(ctstNo);
     return contest;
   }
 
-  // 관리자 페이지용 공모전 글작성 폼
+  // 공모전 리스트(관리자 페이지)
+  @GetMapping("contestList")
+  public String list(Model model) throws Exception {
+    model.addAttribute("contests", contestService.list());
+    return "contest/contestList";
+  }
+  
+  // 공모전 글작성 폼(관리자 페이지)
   @GetMapping("contestForm")
   public void form() throws Exception {
     String dirPath2 = sc.getRealPath("/contest/files");
     System.out.println(dirPath2);
   }
   
-  // 관리자 페이지용 공모전 글수정
+  // 공모전 글수정(관리자 페이지)
   @PostMapping("contestUpdate")
   public String update(Contest contest, Part[] files, Part files2, HttpSession session) throws Exception {
     contest.setContestAttachedFiles(saveAttachedFiles(files));
     contest.setThumbNail(saveThumbNailFile(files2));
-  
-    System.out.println(contest);
     
     if (!contestService.update(contest)) {
       throw new Exception("공모전 게시글을 변경할 수 없습니다.");
@@ -90,13 +88,12 @@ public class ContestController {
     return "redirect:contestList";
   }
 
-  // 관리자 페이지용 공모전 글작성
+  // 공모전 글작성(관리자 페이지)
   @PostMapping("contestAdd")
   public String add(Contest contest, Part[] files, Part files2, HttpServletRequest request, HttpSession session)
       throws Exception {
     contest.setContestAttachedFiles(saveAttachedFiles(files));
     contest.setThumbNail(saveThumbNailFile(files2));
-    System.out.println(contest);
     contestService.add(contest);
 
     return "redirect:contestList";
@@ -106,7 +103,7 @@ public class ContestController {
   private String saveThumbNailFile(Part files2) throws IOException {
     String dirPath = sc.getRealPath("/contest/files");
     
-    if (files2.getSize() != 0) {
+    if (files2.getSize() != 0) { // 썸네일 파일 사이즈가 0이 아니라면
       String filename = UUID.randomUUID().toString(); // 첨부파일의 UUID
       files2.write(dirPath + "/" + filename);
   
@@ -133,7 +130,7 @@ public class ContestController {
     return contestAttachedFiles;
   }
   
-  // 공모전 게시글 삭제
+  // 공모전 게시글 삭제(관리자 페이지)
   @GetMapping("contestDelete")
   public String delete(int ctstno, HttpSession session) throws Exception {
 
@@ -143,24 +140,19 @@ public class ContestController {
 
     return "redirect:contestList";
   }
-//
-//  @GetMapping("fileDelete")
-//  public String fileDelete(int no, HttpSession session) throws Exception {
-//    // 첨부파일 정보를 가져온다.
-//    AttachedFile attachedFile = boardService.getAttachedFile(no);
-//
-//    // 게시글의 작성자가 로그인 사용자인지 검사한다.
-//    Member loginMember = (Member) session.getAttribute("loginMember");
-//    Board board = boardService.get(attachedFile.getBoardNo());
-//    if (board.getWriter().getNo() != loginMember.getNo()) {
-//      throw new Exception("게시글 작성자가 아닙니다.");
-//    }
-//
-//    // 첨부파일을 삭제한다.
-//    if (!boardService.deleteAttachedFile(no)) {
-//      throw new Exception("게시글 첨부파일을 삭제할 수 없습니다.");
-//    }
-//
-//    return "redirect:detail?no=" + board.getNo(); // Board 객체를 여기서도 사용해야해서 Board 객체를 생
-//  }
+
+  @GetMapping("contestFileDelete")
+  public String fileDelete(int ctstfno, HttpSession session) throws Exception {
+    // 첨부파일 정보를 가져온다.
+    ContestAttachedFile contestAttachedFile = contestService.getContestAttachedFile(ctstfno);
+    // 첨부파일의 정보에서 공모전 글 번호를 가져온다.
+    Contest contest = contestService.get(contestAttachedFile.getCtstNo());
+    
+    // 첨부파일을 삭제한다.
+    if (!contestService.contestDeleteAttachedFile(ctstfno)) {
+      throw new Exception("게시글 첨부파일을 삭제할 수 없습니다.");
+    }
+    
+    return "redirect:contestDetail?ctstNo=" + contest.getCtstNo(); // Board 객체를 여기서도 사용해야해서 Board 객체를 생
+  }
 }
