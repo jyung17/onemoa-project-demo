@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface ContestDao {
+  
   List<Contest> findAll();
   
   List<Contest> findByTeam(boolean no);
@@ -15,4 +16,12 @@ public interface ContestDao {
   int insert(Contest contest);
   
   int insertFiles(Contest contest);
+  
+  int update(Contest contest);
+  
+  int updateThumbnailFile(Contest contest);
+  
+  int delete(int ctstno);
+  
+  int deleteFiles(int ctstno);
 }

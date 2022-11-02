@@ -163,4 +163,44 @@
     </foreach>
   </insert>
 
+
+
+  <update id="update" parameterType="contest">
+    update contest set
+    orgno=#{orgNo},
+    ctgno=#{ctgNo},
+    title=#{title},
+    subcont=#{subCont},
+    sdate=#{sDate},
+    edate=#{eDate},
+    vw_cnt=#{vw_cnt},
+    org=#{org},
+    appl=#{appl},
+    cont=#{cont},
+    page=#{page},
+    size=#{size},
+    qual=#{qual},
+    team=#{team},
+    reward=#{reward}
+    where ctstno=#{ctstNo}
+  </update>
+
+
+  <update id="updateThumbnailFile" parameterType="contest">
+    update contest set
+    thumbnail=#{thumbNail}
+    where ctstno=#{ctstNo}
+  </update>
+
+
+  <delete id="delete">
+    delete from contest
+    where ctstno=#{value}
+  </delete>
+
+  <delete id="deleteFiles">
+    delete from contest_file
+    where ctstno=#{value}
+  </delete>
+
 </mapper>

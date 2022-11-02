@@ -11,4 +11,8 @@ public interface ContestService {
   List<Contest> listTeam(boolean no) throws Exception;
   
   void add(Contest contest) throws Exception;
+  
+  boolean update(Contest contest) throws Exception;
+  
+  boolean delete(int ctstno) throws Exception;
 }

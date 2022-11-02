@@ -1,14 +1,11 @@
 package com.bitcamp.onemoaproject;
 
-import java.util.Random;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @SpringBootApplication
@@ -23,11 +20,6 @@ public class App {
   public String welcome(@CookieValue(name = "email", defaultValue = "") String email, Model model) {
     model.addAttribute("email", email);
     return "index";
-  }
-  
-  @GetMapping("/index")
-  public String welcome2() {
-    return "indexFragments";
   }
   
   @GetMapping("joinform")

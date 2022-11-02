@@ -9,7 +9,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
     <script src="../js/onemoa.js"></script>
     <script src="../js/login.js"></script>
-    <script src="../js/contest.js"></script>
   </head>
   <body style="overflow-x: hidden;">
     <!-- login modal -->
@@ -573,11 +572,11 @@
         let contestTeam = $(this).attr("value");
 
         // 공모전 개인전이라면 상세보기에서 팀원구해요 태그 닫기
-        if(contestTeam == "true") {
+        if(contestTeam == "false") {
           document.querySelector("#contestTypeTeam").style.display = "none";
         }
         // 공모전 팀전이라면 상세보기에서 팀원구해요 태그 열기
-        if(contestTeam == "false") {
+        if(contestTeam == "true") {
           document.querySelector("#contestTypeTeam").style.display = "block";
         }
 
@@ -615,7 +614,7 @@
               if (arr.length != 0) {
                 for (let i = 0; i < arr.length; i++) {
                   spanList += "<a href='" + "/onemoa/contest/files/" + arr[i].filepath + "'>"
-                      + "<span>" + arr[i].fName + "</span>" + "</a>";
+                      + "<span>" + arr[i].fname + "</span>" + "</a>";
                 }
                 var td = document.getElementById("xNameList");
                 td.innerHTML = spanList;

@@ -41,4 +41,32 @@ public class DefaultContestService implements ContestService{
       contestDao.insertFiles(contest);
     }
   }
+  
+  @Transactional
+  @Override
+  public boolean update(Contest contest) throws Exception {
+    //1) 게시글 변경
+    if (contestDao.update(contest) == 0) {
+      return false;
+    }
+    //2) 썸네일 파일 변경
+    if (contest.getThumbNail() != null) {
+      contestDao.updateThumbnailFile(contest);
+    }
+    //3) 첨부파일 추가
+    if (contest.getContestAttachedFiles().size() > 0) {
+      contestDao.insertFiles(contest);
+    }
+    return true;
+  }
+  
+  @Transactional
+  @Override
+  public boolean delete(int ctstno) throws Exception {
+    // 1) 첨부파일 삭제
+    contestDao.deleteFiles(ctstno);
+  
+    // 2) 게시글 삭제
+    return contestDao.delete(ctstno) > 0;
+  }
 }

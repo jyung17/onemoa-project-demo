@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>bitcamp</title>
+  <title>onemoa v</title>
 </head>
 <body>
 <h1 style="text-align: center; margin-top:70px;">게시글 상세 정보</h1>
@@ -29,13 +29,16 @@
       <th>주관</th>
       <td><input name='org' type='text' size='60' value='주관' data-th-value="${contest.org}"></td>
     </tr>
-     <tr>
-     <th>썸네일</th>
-     <td>
-       <img data-th-src="${'/onemoa/contest/files/'+contest.thumbNail}" style="width: 177px; height: 194px;">
-       <input name='files2' type="file" multiple data-th-value="${contest.thumbNail}">
-     </td>
-   </tr>
+    <tr>
+       <th>썸네일</th>
+       <td>
+         <img data-th-src="${'/onemoa/contest/files/'+contest.thumbNail}" style="width: 177px; height: 194px;">
+         <li>
+           <a href="files/test.gif" data-th-href="@{files/{path}(path=${contest.thumbNail})}" data-th-text="${contest.thumbNail}"></a>
+         </li>
+         파일 추가 : <input name='files2' type="file" multiple>
+       </td>
+    </tr>
     <tr>
       <th>공모전분야</th>
       <td>
@@ -102,7 +105,7 @@
                  data-th-href="@{files/{path}(path=${file.filepath})}"
                  data-th-text="${file.filepath}">test.gif</a>
               [<a href="fileDelete?no=${file.ctstFno}"
-                  data-th-href="@{fileDelete(no=${file.ctstFno})}">삭제</a>]
+                  data-th-href="@{fileDelete(ctsfno=${file.ctstFno})}">삭제</a>]
             </li>
           </ul>
           파일 추가: <input name='files' type="file" multiple>
@@ -116,7 +119,7 @@
   <p style="text-align: center;">
     <button type='submit'>변경</button>
     <a href='contestDelete?ctstNo=1'
-       data-th-href="@{contestDelete(ctstNo=${contest.ctstNo})}">삭제</a>
+       data-th-href="@{contestDelete(ctstno=${contest.ctstNo})}">삭제</a>
     <a href='contestList'>목록</a>
   </p>
 </form>
