@@ -103,6 +103,8 @@
   <select id="findByNo" resultMap="contestMap">
     select
     cont.ctstno,
+    cont.ctgno,
+    cont.orgno,
     co.name coname,
     cc.name ccname,
     cont.title,
@@ -171,7 +173,6 @@
     subcont=#{subCont},
     sdate=#{sDate},
     edate=#{eDate},
-    vw_cnt=#{vw_cnt},
     org=#{org},
     appl=#{appl},
     cont=#{cont},
