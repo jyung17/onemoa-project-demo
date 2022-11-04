@@ -1,4 +1,4 @@
-package com.bitcamp.onemoaproject.web.controller;
+package com.bitcamp.onemoaproject.controller;
 
 import com.bitcamp.onemoaproject.service.MailService;
 import com.bitcamp.onemoaproject.service.MemberService;
@@ -33,6 +33,7 @@ public class AuthController {
     if (member != null) {
       session.setAttribute("loginMember", member);
     }
+    System.out.println("session.getAttribute(\"loginMember\") = " + session.getAttribute("loginMember"));
 
     Cookie cookie = new Cookie("email", email);
     if (saveEmail == null) {

@@ -1,4 +1,4 @@
-package com.bitcamp.onemoaproject.web.controller;
+package com.bitcamp.onemoaproject.controller;
 
 import com.bitcamp.onemoaproject.service.MemberService;
 import com.bitcamp.onemoaproject.vo.Job;

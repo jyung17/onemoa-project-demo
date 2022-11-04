@@ -1,5 +1,7 @@
-package com.bitcamp.onemoaproject.web.controller;
+package com.bitcamp.onemoaproject.controller;
 
+import com.bitcamp.onemoaproject.service.ContestService;
+import com.bitcamp.onemoaproject.vo.contest.Contest;
 import com.bitcamp.onemoaproject.vo.contest.ContestAttachedFile;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,8 +19,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import com.bitcamp.onemoaproject.service.ContestService;
-import com.bitcamp.onemoaproject.vo.contest.Contest;
 
 @Controller
 @RequestMapping("contest")
@@ -52,6 +52,15 @@ public class ContestController {
   public Contest contestTeamDetail(int contestNumber) throws Exception {
     Contest contest = contestService.get(contestNumber);
     return contest;
+  }
+  
+  // 공모전 팀원구해요
+  @PostMapping("contestTeam/teamList")
+  @ResponseBody
+  public Object contestTeamTeamList(Model model, int contestNumber) throws Exception {
+    model.addAttribute("teams",contestService.getTeamList(contestNumber));
+//    return model.toString();
+    return model.getAttribute("teams");
   }
 
   // 공모전 상세정보(관리자 페이지)

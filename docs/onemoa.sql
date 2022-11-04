@@ -93,8 +93,8 @@ CREATE TABLE member (
   detail_addr VARCHAR(255) NOT NULL COMMENT '상세주소', -- 상세주소
   jno         INTEGER      NOT NULL COMMENT '직업번호', -- 직업번호
   bank        VARCHAR(255) NULL     COMMENT '은행명', -- 은행명
-  acount      VARCHAR(100) NULL     COMMENT '계좌번호', -- 계좌번호
-  profil      VARCHAR(255) NOT NULL COMMENT '프로필사진', -- 프로필사진
+  account     VARCHAR(100) NULL     COMMENT '계좌번호', -- 계좌번호
+  profile     VARCHAR(255) NULL     COMMENT '프로필사진', -- 프로필사진
   token       VARCHAR(255) NULL     COMMENT '이메일토큰', -- 이메일토큰
   status      BOOLEAN      NOT NULL COMMENT '상태' -- 상태
 )
@@ -119,28 +119,35 @@ CREATE UNIQUE INDEX UIX_member2
     tel ASC -- 연락처
   );
 
+-- 회원 유니크 인덱스3
+CREATE UNIQUE INDEX UIX_member3
+  ON member ( -- 회원
+    nick ASC -- 닉네임
+  );
+
 ALTER TABLE member
   MODIFY COLUMN mno INTEGER NOT NULL AUTO_INCREMENT COMMENT '회원번호';
 
 -- 공모전
 CREATE TABLE contest (
-  ctstno  INTEGER      NOT NULL COMMENT '공모전번호', -- 공모전번호
-  orgno   INTEGER      NOT NULL COMMENT '기관분류번호', -- 기관분류번호
-  ctgno   INTEGER      NOT NULL COMMENT '공모전카테고리번호', -- 공모전카테고리번호
-  title   VARCHAR(255) NOT NULL COMMENT '제목', -- 제목
-  subcont MEDIUMTEXT   NOT NULL COMMENT '내용', -- 내용
-  cdt     DATE         NOT NULL DEFAULT now() COMMENT '등록일', -- 등록일
-  sdate   DATE         NULL     COMMENT '시작일', -- 시작일
-  edate   DATE         NULL     COMMENT '종료일', -- 종료일
-  vcnt    INTEGER      NOT NULL COMMENT '조회수', -- 조회수
-  org     VARCHAR(255) NOT NULL COMMENT '주최기관명', -- 주최기관명
-  appl    VARCHAR(255) NULL     COMMENT '접수방법', -- 접수방법
-  cont    MEDIUMTEXT   NULL     COMMENT '상세내용', -- 상세내용
-  page    VARCHAR(255) NULL     COMMENT '홈페이지', -- 홈페이지
-  size    INTEGER      NULL     COMMENT '참가인원', -- 참가인원
-  qual    VARCHAR(255) NULL     COMMENT '참가자격', -- 참가자격
-  team    BOOLEAN      NOT NULL COMMENT '팀여부', -- 팀여부
-  reward  INTEGER      NULL     COMMENT '상금' -- 상금
+  ctstno    INTEGER      NOT NULL COMMENT '공모전번호', -- 공모전번호
+  orgno     INTEGER      NOT NULL COMMENT '기관분류번호', -- 기관분류번호
+  ctgno     INTEGER      NOT NULL COMMENT '공모전카테고리번호', -- 공모전카테고리번호
+  title     VARCHAR(255) NOT NULL COMMENT '제목', -- 제목
+  subcont   MEDIUMTEXT   NOT NULL COMMENT '내용', -- 내용
+  cdt       DATE         NOT NULL DEFAULT now() COMMENT '등록일', -- 등록일
+  sdate     DATE         NULL     COMMENT '시작일', -- 시작일
+  edate     DATE         NULL     COMMENT '종료일', -- 종료일
+  vw_cnt    INTEGER      NULL     COMMENT '조회수', -- 조회수
+  org       VARCHAR(255) NOT NULL COMMENT '주최기관명', -- 주최기관명
+  appl      VARCHAR(255) NULL     COMMENT '접수방법', -- 접수방법
+  cont      MEDIUMTEXT   NULL     COMMENT '상세내용', -- 상세내용
+  page      VARCHAR(255) NULL     COMMENT '홈페이지', -- 홈페이지
+  size      INTEGER      NULL     COMMENT '참가인원', -- 참가인원
+  qual      VARCHAR(255) NULL     COMMENT '참가자격', -- 참가자격
+  team      BOOLEAN      NOT NULL COMMENT '팀여부', -- 팀여부
+  reward    INTEGER      NULL     COMMENT '상금', -- 상금
+  thumbnail VARCHAR(255) NOT NULL COMMENT '썸네일' -- 썸네일
 )
 COMMENT '공모전';
 
@@ -162,7 +169,7 @@ CREATE TABLE product (
   title         VARCHAR(255) NOT NULL COMMENT '제목', -- 제목
   cont          MEDIUMTEXT   NOT NULL COMMENT '내용', -- 내용
   price         INTEGER      NOT NULL COMMENT '가격', -- 가격
-  vcnt          INTEGER      NOT NULL DEFAULT 0 COMMENT '조회수', -- 조회수
+  vw_cnt        INTEGER      NOT NULL DEFAULT 0 COMMENT '조회수', -- 조회수
   cdt           DATE         NOT NULL DEFAULT now() COMMENT '작성일', -- 작성일
   thumbnail     VARCHAR(255) NULL     COMMENT '썸네일파일이름', -- 썸네일파일이름
   thumbnailpath VARCHAR(255) NULL     COMMENT '썸네일파일경로' -- 썸네일파일경로
@@ -214,15 +221,16 @@ ALTER TABLE contest_file
       ctstfno -- 첨부파일번호
     );
 
+ALTER TABLE contest_file
+  MODIFY COLUMN ctstfno INTEGER NOT NULL AUTO_INCREMENT COMMENT '첨부파일번호';
+
 -- 공지사항
 CREATE TABLE notice (
-  ntcno INTEGER      NOT NULL COMMENT '게시글번호', -- 게시글번호
-  title VARCHAR(255) NOT NULL COMMENT '제목', -- 제목
-  cont  MEDIUMTEXT   NOT NULL COMMENT '내용', -- 내용
-  cdt   DATE         NOT NULL DEFAULT now() COMMENT '작성일', -- 작성일
-  vcnt  INTEGER      NOT NULL COMMENT '조회수', -- 조회수
-  fname VARCHAR(255) NULL     COMMENT '파일이름', -- 파일이름
-  fpath VARCHAR(255) NULL     COMMENT '파일경로' -- 파일경로
+  ntcno  INTEGER      NOT NULL COMMENT '게시글번호', -- 게시글번호
+  title  VARCHAR(255) NOT NULL COMMENT '제목', -- 제목
+  cont   MEDIUMTEXT   NOT NULL COMMENT '내용', -- 내용
+  cdt    DATE         NOT NULL DEFAULT now() COMMENT '작성일', -- 작성일
+  vw_cnt INTEGER      NOT NULL COMMENT '조회수' -- 조회수
 )
 COMMENT '공지사항';
 

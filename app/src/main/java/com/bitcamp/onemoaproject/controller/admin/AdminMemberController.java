@@ -1,4 +1,4 @@
-package com.bitcamp.onemoaproject.web.controller.admin;
+package com.bitcamp.onemoaproject.controller.admin;
 
 import com.bitcamp.onemoaproject.service.AdminMemberService;
 import org.springframework.stereotype.Controller;
