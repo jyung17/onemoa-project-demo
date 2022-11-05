@@ -3,11 +3,13 @@ package com.bitcamp.onemoaproject;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
+@EnableTransactionManagement
 @SpringBootApplication
 public class App {
 
@@ -21,15 +23,15 @@ public class App {
     model.addAttribute("email", email);
     return "index";
   }
-  
+
   @GetMapping("joinform")
   public String joinForm() {
     return "joinForm";
   }
-  
+
   @GetMapping("/productForm")
   public String productForm() {
-    return "product/productForm";
+    return "form";
   }
 }
 

@@ -1,7 +1,6 @@
 package com.bitcamp.onemoaproject.controller;
 
 import com.bitcamp.onemoaproject.service.MemberService;
-import com.bitcamp.onemoaproject.vo.Job;
 import com.bitcamp.onemoaproject.vo.Member;
 import java.util.Map;
 import org.springframework.stereotype.Controller;
@@ -19,8 +18,6 @@ public class MemberController {
   MemberService memberService;
   
   public MemberController(MemberService memberService) {
-    System.out.println("MemberController() 호출됨!");
-    System.out.println("memberService.toString()" + memberService.toString());
     this.memberService = memberService;
   }
   
