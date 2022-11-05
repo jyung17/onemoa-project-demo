@@ -25,7 +25,7 @@
                 style="font-size: 1vw; color: #ff0000; border: none; display: none; outline:none; width: 100%; text-align: center" />
           </div>
           <label for="label-a"><input type="checkbox" name="saveEmail" id="email2">이메일 유지<br></label>
-          <p class="find"><a href = "#">아이디 찾기</a> / <a href = "#">패스워드 찾기</a></p>
+          <p class="find"><a href = "member/findIdPw">아이디 찾기</a> / <a href = "member/findIdPw">패스워드 찾기</a></p>
           <p>
             <button type='button' class="loginbtn" id="adminCheck"><img src="http://localhost:3333/onemoa/img/loginbtn.png"></button>
           </p>
@@ -37,7 +37,7 @@
           <a href="#"><img src="http://localhost:3333/onemoa/img/google.png"></a>
         </div>
         <div class="sign">
-          <a href="joinform"><img src="http://localhost:3333/onemoa/img/signup.png"></a>
+          <a href="http://localhost:3333/onemoa/joinform"><img src="http://localhost:3333/onemoa/img/signup.png"></a>
         </div>
       </div>
     </div>
@@ -47,7 +47,7 @@
     <div class="nav">
       <a href="/onemoa/"><p class="logo">ONEMOA</p></a>
       <ul class="firstnav">
-        <li data-th-if="${session.loginMember != null}"><a href="/onemoa/logout" data-th-text="로그아웃">로그아웃</a></li>
+        <li data-th-if="${session.loginMember != null}"><a href="http://localhost:3333/onemoa/logout" data-th-text="로그아웃">로그아웃</a></li>
         <li><button class="btn-open-popup" data-th-if="${session.loginMember == null}">로그인</button></li>
         <li class="firstnav-li"><button class="btn-open-popup2">마이페이지</button></li>
         <li class="firstnav-li"><button class="btn-open-popup3">메시지</button></li>

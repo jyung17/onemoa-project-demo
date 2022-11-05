@@ -2491,7 +2491,7 @@ label[for="label-a"] {
 .product_container {
   display: grid;
   gap: 40px 25px;
-  grid-template-rows: 35rem 35rem 35rem 35rem;
+  grid-template-rows: 18rem 18rem 18rem 18rem;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   margin-top: 2.5vw;
   margin-right: 3vw;
@@ -2559,4 +2559,39 @@ label[for="label-a"] {
   font-size: 1vw;
   margin: 0 0 0 20px;
   float : right;
+}
+
+.pagelogin-container {
+  text-align: center;
+  background-color: rgb(255, 255, 255);
+  border-radius: 10px;
+  box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
+  width: 29.833%;
+  height: 85%;
+  margin: auto;
+}
+.login_container2 {
+  text-align: center;
+  margin: auto;
+}
+.input-findIdPw tr td input {
+  display: block;
+  width: 101%;
+  height: 47px;
+  background-color: #fff;
+  border: 2px solid #dedede;
+  padding-left: 10px;
+  margin-left: 8%;
+  margin-bottom: 8px;
+  border-radius: 5px;
+}
+.input-findIdPw {
+  width: 85.4%;
+}
+.input-findIdPw .findIdPwBtn {
+  width: 100%;
+  background-color: #707fc2;
+  color: #fff;
+  border: none;
+  cursor: pointer;
 }
