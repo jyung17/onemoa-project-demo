@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset = "UTF-8">
+  <title>onemoa</title>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script src="/js/onemoa.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <link href="/onemoa/css/onemoa.css" rel="stylesheet">
+  <script src="/onemoa/js/login.js"></script>
+</head>
+<body style="overflow-x: hidden">
+
+<div data-th-replace="/fragments/nav.html :: fragment-nav"></div>
+
+<main id="noticeList">
+  <div><img id="noticeBanner" src="../img/contestbg.png" alt=""></div>
+  <div id="underBanner"></div>
+  <div class="container">
+      <table class="table">
+        <thead>
+         <tr>
+           <th>No</th>
+           <th>제목</th>
+           <th>작성자</th>
+           <th>등록일</th>
+         </tr>
+        </thead>
+        <tbody>
+         <tr data-th-each="notice, state : ${notices}">
+          <td th:utext="${state.count}">3</td>
+          <td>
+            <a href='detail?no=1'
+              data-th-href="@{detail(no=${notice.no})}"
+              data-th-text="${notice.title == ''} ? '(제목없음)' : ${notice.title}">제목</a>  
+          </td>
+          <td>관리자</td>
+          <td data-th-text="${notice.createdDate}">등록일</td>
+          <!-- 수정/삭제 버튼  -->
+         </tr>
+        </tbody>
+      </table>
+      <button type="button" class="btn btn-primary btn-sm" id="backToMain"><a href="./form">새 글</a></button>
+      <button type="button" class="btn btn-primary btn-sm" id="backToMain"><a href="/onemoa/">메인으로 돌아가기</a></button>
+  </div>
+</main>
+
+<footer data-th-replace="/fragments/footer.html :: fragment-footer"></footer>
+
+</body>
+</html>

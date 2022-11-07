@@ -43,7 +43,7 @@ public class LoginCheckFilter implements Filter {
         || servletPath.toLowerCase().endsWith("update")
         || servletPath.toLowerCase().endsWith("delete")
         || servletPath.toLowerCase().contains("mypage")) {
-    
+
       Member loginMember = (Member) httpRequest.getSession().getAttribute("loginMember");
       if (loginMember == null) { // 로그인 하지 않았다
         httpResponse.sendRedirect(httpRequest.getContextPath() + "/pageLogin");

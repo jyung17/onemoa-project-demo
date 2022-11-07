@@ -3,16 +3,29 @@
 <head>
   <meta charset="UTF-8">
   <title>onemoa v</title>
-  <link href="http://localhost:3333/onemoa/css/onemoa.css" rel="stylesheet">
+  <link href="/onemoa/css/onemoa.css" rel="stylesheet">
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
-  <script src="http://localhost:3333/onemoa/js/login.js"></script>
+  <script src="/onemoa/js/login.js"></script>
+  <style>
+    #newProduct {
+      position: fixed;
+      top: 45vw;
+      left: 87.8vw;
+      padding: 10px 20px;
+      border-radius: 20px;
+      border: none;
+      background-color: #dbdbe5;
+      font-size: 1.2vw;
+    }
+
+  </style>
 </head>
 <body style="overflow-x: hidden">
   <div data-th-replace="/fragments/nav.html :: fragment-nav"></div>
 
   <main id="productList">
-    <img class="banner" src="http://localhost:3333/onemoa/img/productbg.png" alt="">
+    <img class="banner" src="/onemoa/img/productbg.png" alt="">
     <div id="underBanner">
       <p id="">전체카테고리
         <span>최신순</span>
@@ -21,7 +34,7 @@
       </p>
     </div>
 
-    <nav>
+    <nav id="productCateList">
       <ul>
         <li class="menu" data-th-each= "category : ${productCategories}">
           <p class="cate1" data-th-text="${category.name}">상위 카테고리</p>
@@ -34,17 +47,36 @@
       </ul>
     </nav>
 
-    <section id="product">
-      <div class="product_container">
-        <a href="#" data-th-href="@{detail(no=${product.no})}" class="item" data-th-each= "product : ${products}">
-          <img src="./img/conthumb.png" alt="">
-          <p data-th-text="${product.title}">상품게시물 제목</p>
-          <p data-th-text="${#numbers.formatInteger(product.price, 3, 'COMMA')} + ' 원'">판매 상품 가격</p>
-        </a>
-      </div>
-    </section>
-    <div id="underBanner"></div>
-  </main>
+       <section id="product">
+         <div class="product_container">
+            <a href="#" data-th-href="@{detail(no=${product.pno})}"  class="item" data-th-each= "product : ${products}">
+              <img data-th-src="'/onemoa/product/files/' + ${product.fpath}" alt="">
+              <p data-th-text="${product.title}">상품게시물 제목</p>
+              <p data-th-text="${#numbers.formatInteger(product.price, 3, 'COMMA')} + ' 원'">판매 상품 가격</p>
+            </a>
+         </div>
+       </section>
+
+     <oi class = "pagingContainer">
+       <li class="page-firstPage" th:if="${pageMaker.prev}">
+         <a class="page-link" th:href="@{list(pageMaker.startPage-1)}" aria-label="Previous">
+           <span aria-hidden="true">이전페이지</span>
+         </a>
+       </li>
+       <th:block th:each="pageNum: ${#numbers.sequence(pageMaker.startPage, pageMaker.endPage)}">
+         <li class="page-1to5List">
+           <a class="page-link" th:href="@{list(page=${pageNum})}"><i th:text="${pageNum}"></i></a>
+         </li>
+       </th:block>
+       <li class="page-nextPage" th:if="${pageMaker.next && pageMaker.endPage >0}">
+         <a class="page-link" th:href="@{list(page=${pageMaker.endPage+1})}" aria-label="Next">
+           <span aria-hidden="true">다음페이지</span>
+         </a>
+       </li>
+     </oi>
+
+    <a href="form"><button class="button" id="newProduct">새 글 작성하기</button></a>
+   </main>
 
   <footer data-th-replace="/fragments/footer.html :: fragment-footer"></footer>
   <script>
@@ -62,5 +94,10 @@
         }
       })});
   </script>
+
+<script>
+  let test1 = [[${products}]];
+  console.log(test1);
+</script>
 </body>
 </html>
