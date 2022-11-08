@@ -86,8 +86,10 @@ function dis2(){
     url: "/onemoa/contest/contestTeam/teamRecruitForm",
     data:{contestNumber: contestNumber},
     success: function (result) {
-      console.log("result : " + result);
-
+      console.log(result);
+      $("#teamRecruitFormReaderNo").attr("value", result.no)
+      $("#teamRecruitFormReaderProfile").attr("src", "/onemoa/member/files/" + result.profile);
+      $("#teamRecruitFormReaderNickname").html(result.nickname);
     }
   });
 }
@@ -307,9 +309,15 @@ $(document).on("click","button[name=minus2]",function(){
 
 // 페이지 필터 타입(전체, 대기업, 공공기관, 자영업자)
 $(".orgTypeType").click(function () {
-  let urlParameter = location.search; // 현재 페이지의 url 파라미터값 얻기
-  let urlSplit = urlParameter.substring(1,5); // ex) 파라미터값 문자열 자르기 ?no1=orgno=2 -> no=1
+  let url = location.href;
   let orgNumber = $(this).attr("name");
-  let setUrl = "/onemoa/contest/contestTeam?" + urlSplit + "&orgno=" + orgNumber;
-  window.location = setUrl;
+  if(url.includes("all")) {
+    window.location.href = "/onemoa/contest/contestTeam?no=all" + "&ono=" + orgNumber;
+  }
+  if(url.includes("true")) {
+    window.location.href = "/onemoa/contest/contestTeam?no=true" + "&ono=" + orgNumber;
+  }
+  if(url.includes("false")) {
+    window.location.href = "/onemoa/contest/contestTeam?no=false" + "&ono=" + orgNumber;
+  }
 });
