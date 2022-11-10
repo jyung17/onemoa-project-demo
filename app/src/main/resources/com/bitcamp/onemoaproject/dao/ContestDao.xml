@@ -138,7 +138,16 @@
     <if test="sortCd != null">
       cdt ${sortCd}
     </if>
-    <if test="sortCd == null">
+    <if test="sortEd != null">
+      edate ${sortEd}
+    </if>
+    <if test="sortVw != null">
+      vw_cnt ${sortVw}
+    </if>
+    <if test="sortRw != null">
+      reward ${sortRw}
+    </if>
+    <if test="sortCd == null and sortEd == null and sortVw == null and sortRw == null">
       ctstno desc
     </if>
   </select>

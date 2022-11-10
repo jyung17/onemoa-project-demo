@@ -8,7 +8,7 @@ import java.util.List;
 public interface ContestService {
   List<Contest> list(String no, String ono, String sortCd) throws Exception; // 공모전 리스트
   
-  List<Contest> list2(String no, String ono, String sortCd) throws Exception; // 공모전 리스트
+  List<Contest> list2(String no, String ono, String sortCd, String sortEd, String sortVw, String sortRw) throws Exception; // 공모전 리스트
 
   Contest get(int ctstNo) throws Exception; // 공모전 상세정보
   
