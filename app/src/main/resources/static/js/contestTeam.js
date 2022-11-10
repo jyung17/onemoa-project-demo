@@ -193,11 +193,20 @@ $("#leaderJoin").click(function () {
   console.log(recruitments);
 
 
+
   $.ajax({
     type: "POST",
     url: "/onemoa/contest/contestTeam/teamRecruit",
-    data: {},
-
+    data: {
+      "contestNumber": contestNumber,
+      "memberNo": memberNo,
+      "textArea": textArea,
+      "portfolios": portfolios,
+      "recruitments": recruitments,
+    },
+    success: function (result) {
+      console.log(result);
+    },
   });
 });
 
