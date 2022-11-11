@@ -65,7 +65,6 @@ $(".con").click(function () {
 function clo(){
   if ($('.modal2').css('display') == 'show'){
     $('.modal2').hide();
-
   } else{
     $('.modal2').hide();
     body.style.overflow = 'auto';
@@ -115,6 +114,7 @@ function dis2(){
     },
   });
 }
+
 let selectPortfolioNumber = "";
 let selectPortfolioText = "";
 
@@ -126,6 +126,7 @@ function portfolioBoxChange() {
       "<a href='/onemoa/portfolio/firstportfolio?ptNo=" + selectPortfolioNumber + "'" + "onClick=\"window.open(this.href, '', 'width=1000px, height=1080px')\"; target=\"_blank\">" + selectPortfolioText + "</a>" + "</li>";
   $("#innerPortfolio").append(aList);
 }
+
 let selectRecruNumber = "";
 let selectRecruText = "";
 let selectPersonnelNumber = "";
@@ -143,7 +144,6 @@ function personnelSelect() {
       +"</li>";
   $("#innerRecruitment").append(bList);
 }
-
 
 function clo2(){
   if ($('.modal3').css('display') == 'show'){
@@ -186,27 +186,46 @@ $("#leaderJoin").click(function () {
     recruitments[i] = seq.attr("id");
   }
 
-  console.log(contestNumber)// 공모전 번호;
-  console.log(memberNo);
-  console.log(textArea);
-  console.log(portfolios);
-  console.log(recruitments);
-
-
-
   $.ajax({
     type: "POST",
     url: "/onemoa/contest/contestTeam/teamRecruit",
     data: {
-      "contestNumber": contestNumber,
-      "memberNo": memberNo,
-      "textArea": textArea,
-      "portfolios": portfolios,
-      "recruitments": recruitments,
+      "contestNumber": contestNumber, // 공모전 번호;
+      "memberNo": memberNo, // 팀장 번호
+      "textArea": textArea, // 팀장 소개글
+      "portfolios": portfolios, // 팀장 포트폴리오
+      "recruitments": recruitments, // 모집분류
     },
-    success: function (result) {
-      console.log(result);
+    statusCode: {
+      500: function (result) {
+        swal({
+          title: "이미 등록하신 공모전입니다.",
+          icon: "error",
+          closeOnClickOutside : false}).then(() =>{
+          window.location.href = "/onemoa/";
+        });
+      },
     },
+    success: function dis(){
+      team();
+      if ($('.modal2').css('display') == 'none'){
+        $('.modal2').show();
+        $('.modal3').hide();
+        $('.modal4').hide();
+        body.style.overflow = 'hidden';
+      } else{
+        $('.modal2').hide();
+        body.style.overflow = 'auto';
+      }
+    },
+    error: function (result) {
+      swal({
+        title: "이미 등록하신 공모전입니다.",
+        icon: "error",
+        closeOnClickOutside : false}).then(() =>{
+        window.location.href = "/onemoa/";
+      });
+    }
   });
 });
 
@@ -220,7 +239,11 @@ function clo3(){
   }
 }
 
-function dis4(){
+// 팀장 상세보기
+function dis4(clicked_id) {
+  memberNo = clicked_id;
+
+  // modal5 팀장상세보기
   if ($('.modal5').css('display') == 'none'){
     $('.modal2').show();
     $('.modal5').show();
@@ -228,7 +251,64 @@ function dis4(){
     $('.modal2').show();
     $('.modal5').hide();
   }
+
+  // 팀장 정보 정보 요청
+    $.ajax({
+    type: "POST",
+    url: "/onemoa/contest/contestTeam/readerDetail",
+    data: {
+      "contestNumber": contestNumber,
+      "memberNumber": memberNo,
+    },
+    success: function (result) {
+      console.log(result);
+      let teamNumber = result.tno; // 팀번호
+      let teamCont = result.cont; // 팀장 소개글
+      let readerNumber = result.reader.no; // 팀장 번호
+      let readerNickame = result.reader.nickname; // 팀장 닉네임
+      let readerProfile = result.reader.profile;
+
+      let readerPortfoliosList = "";
+      for (let i = 0; i < result.contestTeamPortfolios.length; i++) {
+        readerPortfoliosList += "<li>" +
+            "<a href='" + result.contestTeamPortfolios[i].fpath + "'" + "onClick=\"window.open(this.href, '', 'width=1000px, height=1080px')\"; target=\"_blank\">" + "http://onemoa.com" + result.contestTeamPortfolios[i].fpath +"</li>"
+      }
+
+      $("#xx-readerProfile").attr("src", "/onemoa/member/files/" + readerProfile);
+      $("#xx-readerNickname").text(readerNickame);
+      $("#xx-readerContent").text(teamCont);
+      $("#xx-readerPortfolios").html(readerPortfoliosList);
+
+      // 팀장이 등록한 팀 분류 정보 요청
+      $.ajax({
+        type: "POST",
+        url: "/onemoa/contest/contestTeam/readerField",
+        data: {"teamNumber": teamNumber},
+        success: function (result2) {
+          console.log(result2);
+
+          let fieldHead = "";
+          let fieldList = "";
+          let fieldSize = 0;
+
+          for (let i = 0; i < result2.length; i++) {
+            fieldList += "<span>" + result2[i].name + "</span>"
+                + "<span>" + result2[i].size + "</span>"
+            fieldSize += Number(result2[i].size);
+          }
+
+          fieldHead = "<li>" +  "모집인원 " + fieldSize + " 명" + fieldList + "</li>" + "<button class=\"tmm\" onclick=\"dis5()\">팀원 지원하기</button>"
+          $("#xx-readerField").html(fieldHead);
+        },
+      });
+
+      // $.ajax({
+      // });
+    },
+  });
 }
+
+// modal5 팀장상세보기 닫기 버튼
 function clo4(){
   if ($('.modal5').css('display') == 'show'){
     $('.modal5').hide();
@@ -239,6 +319,7 @@ function clo4(){
   }
 }
 
+// 팀원 지원하기 버튼
 function dis5(){
   if ($('.modal6').css('display') == 'none'){
     $('.modal4').show();
@@ -248,6 +329,8 @@ function dis5(){
     $('.modal6').hide();
   }
 }
+
+
 function clo5(){
   if ($('.modal5').css('display') == 'show'){
     $('.modal5').hide();
@@ -329,7 +412,8 @@ function team(){
           // console.log("팀장 회원번호 : " + result[i].reader.no);
           // console.log("팀장 닉네임 : " + result[i].reader.nickname);
           // console.log("팀장 프로필파일경로 : " + result[i].reader.profile);
-          listList += "<li>" + "<a href='" + "#'" + "onclick=\"dis4()\"" + "id='" + result[i].tno + "'" +  ">"
+          // listList += "<li class='teamJangDetail1'>" + "<a href='" + "#'" + "onclick='dis4()'" + "class='teamJangDetail2'" + "id='" + result[i].tno + "'" +  ">"
+          listList += "<li onclick='dis4(this.id)'"  + "id='" + result[i].reader.no + "'" + ">"
               + "<img src='/onemoa/member/files/"
               + result[i].reader.profile + "'"
               + "onmouseover=\"this.src='../img/profile11.png'\""
@@ -337,7 +421,6 @@ function team(){
               + result[i].reader.profile
               + "'"
               + "\">"
-              + "</a>"
               + "<br>"
               + "<p>" + result[i].reader.nickname
               + "</p>"

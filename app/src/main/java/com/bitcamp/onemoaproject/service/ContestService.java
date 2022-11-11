@@ -3,6 +3,7 @@ package com.bitcamp.onemoaproject.service;
 import com.bitcamp.onemoaproject.vo.contest.Contest;
 import com.bitcamp.onemoaproject.vo.contest.ContestAttachedFile;
 import com.bitcamp.onemoaproject.vo.contest.ContestTeam;
+import com.bitcamp.onemoaproject.vo.contest.ContestTeamField;
 import java.util.List;
 
 public interface ContestService {
@@ -25,4 +26,8 @@ public interface ContestService {
   boolean contestDeleteAttachedFile(int fileNo) throws Exception; // 첨부파일 번호로 첨부파일 삭제
   
   void addTeam(ContestTeam contestTeam) throws Exception;
+  
+  ContestTeam getTeamReader(int contestNo, int memberNo) throws Exception;
+  
+  List<ContestTeamField> getTeamField(int teamNo) throws Exception;
 }
