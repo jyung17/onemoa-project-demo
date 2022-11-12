@@ -259,13 +259,13 @@
           <div class="modal_body5">
 
             <div class="teamJangD2">
-              <p class="pp2">닉네임님 상세정보</p>
+              <p id="xx-readerNickname1" class="pp2">닉네임님 상세정보</p>
               <ul class="tjd2">
                 <li>
                   <div class="tjdimg2">
                     <img id="xx-readerProfile" src="../img/profile1.png">
                   </div>
-                  <p id="xx-readerNickname">닉네임</p>
+                  <p id="xx-readerNickname2">닉네임</p>
                 </li>
                 <li>
                   <p id="xx-readerContent">[나를 소개하는 글]
@@ -300,7 +300,7 @@
               </ul>
             </div>
 
-            <div class="portfolio2">
+            <div class="portfolio2" id="xx-fieldMemberUl">
               <ul>
                 <li><img src="../img/profile1.png"></li>
                 <li>
@@ -309,32 +309,7 @@
                 </li>
                 <li><p><a href="#"></a>지원자 보기</p></li>
               </ul>
-              <ul>
-                <li><img src="../img/profile2.png"></li>
-                <li>
-                  <p>촬영 지원합니다!</p>
-                  <p><a href="#">수정</a><a href="#">삭제</a></p>
-                </li>
-                <li><p><a href="#"></a>지원자 보기</p></li>
-              </ul>
-              <ul>
-                <li><img src="../img/profile3.png"></li>
-                <li>
-                  <p>촬영 지원합니다!</p>
-                  <p><a href="#">수정</a><a href="#">삭제</a></p>
-                </li>
-                <li><p><a href="#"></a>지원자 보기</p></li>
-              </ul>
-              <ul>
-                <li><img src="../img/profile4.png"></li>
-                <li>
-                  <p>촬영 지원합니다!</p>
-                  <p><a href="#">수정</a><a href="#">삭제</a></p>
-                </li>
-                <li><p><a href="#"></a>지원자 보기</p></li>
-              </ul>
             </div>
-
           </div>
         </div><!--modal5-->
 
@@ -348,12 +323,12 @@
               <ul class="tjd">
                 <li>
                   <div class="tjdimg">
-                    <img src="../img/profile1.png">
+                    <img id="xx-fieldMemberProfile" src="../img/profile1.png">
                   </div>
-                  <p>닉네임</p>
+                  <p id="xx-fieldMemberNickname">닉네임</p>
                 </li>
                 <li>
-                  <textarea cols="70" rows="50" class="tjdtxt" placeholder="나를 소개하는 글을 입력해주세요."></textarea>
+                  <textarea id="xx-fieldMemberContent" cols="70" rows="50" class="tjdtxt" placeholder="나를 소개하는 글을 입력해주세요."></textarea>
                 </li>
               </ul>
             </div>
@@ -363,7 +338,7 @@
                 <button name="addStaff3"><img src="../img/plus.png"></button>
               </p>
               <div name="hhhhhh2">
-                <select name="port2" class="po2">
+                <select name="port2" class="po2" id="xx-fieldMemberPortfolioSelectBox">
                   <option value="포트폴리오를 선택해주세요." selected>포트폴리오를 선택해주세요.</option>
                   <option value="포트폴리오1">포트폴리오1</option>
                   <option value="포트폴리오2">포트폴리오2</option>
@@ -380,7 +355,8 @@
             </div>
 
             <div class="teammate">
-              <button class="tm" onclick="dis3()">팀원 지원하기</button>
+<!--              <button class="tm" onclick="dis3()">팀원 지원하기</button>-->
+              <button class="tm" onclick="dis6()">팀원 지원하기</button>
               <button class="tm" onclick="clo2()">뒤로가기</button>
             </div>
 

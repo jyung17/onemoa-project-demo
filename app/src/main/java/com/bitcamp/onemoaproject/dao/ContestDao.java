@@ -4,6 +4,7 @@ import com.bitcamp.onemoaproject.vo.contest.Contest;
 import com.bitcamp.onemoaproject.vo.contest.ContestAttachedFile;
 import com.bitcamp.onemoaproject.vo.contest.ContestTeam;
 import com.bitcamp.onemoaproject.vo.contest.ContestTeamField;
+import com.bitcamp.onemoaproject.vo.contest.ContestTeamFieldMember;
 import com.bitcamp.onemoaproject.vo.contest.ContestTeamPortfolio;
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
@@ -52,4 +53,6 @@ public interface ContestDao {
   ContestTeam findByReader(@Param("contestNo") int contestNo,  @Param("memberNo") int memberNo);
   
   List<ContestTeamField> findByTeamField(int teamNo);
+  
+  List<ContestTeamField> findByTeamFieldMember(int fieldNo);
 }

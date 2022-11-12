@@ -91,6 +91,25 @@
     <result column="tno" property="tno"/>
     <result column="name" property="name"/>
     <result column="size" property="size"/>
+
+    <!-- 조인결과에서 모집분야에 여러개의 팀원모집분야지원자를 담을 경우  -->
+    <collection property="ContestTeamFieldMembers" ofType="ContestTeamFieldMember">
+      <id column="tfmno" property="tfmno"/>
+      <result column="tfno" property="tfno"/>
+      <result column="mno" property="mno"/>
+      <result column="cont" property="cont"/>
+      <result column="date" property="date"/>
+      <result column="type" property="type"/>
+      <result column="type" property="type"/>
+
+      <!-- 조인결과에서 팀원모집분야지원자에 한개의 회원을 담을 경우 -->
+      <association property="applicant" javaType="Member">
+        <id column="mno" property="no"/>
+        <result column="nick" property="nickname"/>
+        <result column="profile" property="profile"/>
+      </association>
+
+    </collection>
   </resultMap>
 
   <!-- 팀원모집분야지원자 -->
@@ -104,7 +123,7 @@
     <result column="type" property="type"/>
 
     <!-- 조인결과에서 팀원모집분야지원자에 여러개의 포트폴리오를 담을 경우  -->
-    <collection property="contestTeamFields" ofType="ContestTeamField">
+    <collection property="contestTeamFieldMemberPortfolios" ofType="ContestTeamFieldMemberPortfolio">
       <id column="tmpno" property="tmpno"/>
       <result column="tfmno" property="tfmno"/>
       <result column="fpath" property="fpath"/>
@@ -402,15 +421,24 @@
   </select>
 
   <!-- 팀원모집분야 지원자 리스트 -->
-  <select id="findByTeamFieldMember" resultMap="contestTeamFieldMemberMap">
+  <select id="findByTeamFieldMember" resultMap="contestTeamFieldsMap">
     select
+      tf.tfno,
+      tf.tno,
+      tf.name,
+      tf.size,
+      tf.type,
       tfm.tfmno,
       tfm.tfno,
+      tfm.cont,
+      tfm.cdt,
+      tfm.type,
       m.mno,
       m.nick,
       m.profile
-    from team_field_member tfm
+    from team_field tf
+      join team_field_member tfm on tf.tfno = tfm.tfno
       join member m on m.mno = tfm.mno
-    where tfno=#{value};
+    where tf.tno=#{value};
   </select>
 </mapper>
