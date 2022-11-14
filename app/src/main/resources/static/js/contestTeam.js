@@ -443,10 +443,12 @@ function teamJoin() {
 
   let aLength = $("#innerPortfolio2").find("a").length;
 
+  // 포트폴리오 select option 에서 선택한 값 가져오기
   for(let i=0; i<aLength; i++) {
     portfolios1[i] = $("#innerPortfolio2").find("a").eq(i).attr("href");
   }
 
+  // 팀원분류 체크박스 체크된값 가져오기
   $('input[type="checkbox"]:checked').each(function (index) {
     if (index != 0) {
       select_obj += ', ';
@@ -475,8 +477,6 @@ function teamJoin() {
   });
 }
 
-
-
 let selectPortfolioNumber1 = "";
 let selectPortfolioText1 = "";
 function fieldMemberDetailPortfolioBoxChange() {
@@ -498,7 +498,6 @@ function clo5(){
     $('.modal2').show();
   }
 }
-
 
 // 포폴 추가 버튼
 $(document).on("click","button[name=addStaff]",function(){

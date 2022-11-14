@@ -19,21 +19,23 @@ public interface QnaDao {
 
     int delete(int no);
 
-//  int deleteByMember(int memberNo);
+    List<Qna> findAll();
 
-     List<Qna> findAll();
+    List<Qna> findAll(int no);
+
+    List<Qna> findAll2(int mno);
 
     int insertFiles(Qna qna);
 
-   QnaAttachedFile findFileByNo(int fileNo);
+    QnaAttachedFile findFileByNo(int fileNo);
 
-   List<QnaAttachedFile> findFilesByQna(int qnaNo);
+    List<QnaAttachedFile> findFilesByQna(int qnaNo);
 
-  int deleteFile(int fileNo);
+    int deleteFile(int fileNo);
 
-  int deleteFiles(int qnaNo);
+    int deleteFiles(int qnaNo);
 
-  int deleteFilesByMemberBoards(int memberNo);
+//  int deleteFilesByMemberBoards(int memberNo);
 
 }
 

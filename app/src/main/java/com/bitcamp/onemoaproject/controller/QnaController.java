@@ -4,6 +4,8 @@ import com.bitcamp.onemoaproject.service.QnaService;
 import com.bitcamp.onemoaproject.vo.QnaAttachedFile;
 import com.bitcamp.onemoaproject.vo.Member;
 import com.bitcamp.onemoaproject.vo.Qna;
+import com.bitcamp.onemoaproject.vo.portfolio.Portfolio;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,14 +24,10 @@ import java.util.*;
 @RequestMapping("/qna/")
 public class QnaController {
 
+  @Autowired
   ServletContext sc;
+  @Autowired
   QnaService qnaService;
-
-  public QnaController(QnaService qnaService, ServletContext sc) {
-    System.out.println("QnaController() 호출됨!");
-    this.qnaService = qnaService;
-    this.sc = sc;
-  }
 
   @GetMapping("form")
   public void form() throws Exception {
@@ -68,23 +66,24 @@ public class QnaController {
   }
 
   @GetMapping("list")
-  public void list(Model model) throws Exception {
+  public void list(Model model, HttpSession session) throws Exception {
+    Member member = (Member) session.getAttribute("loginMember");
+    if(member != null) {
+      model.addAttribute("qnas", qnaService.list(member.getNo()));
+    } else {
     model.addAttribute("qnas", qnaService.list());
+    }
   }
+//
+//  @GetMapping("list")
+//  public String list111(Model model, HttpSession session) throws Exception {
+//    Member loginMember = (Member) session.getAttribute("loginMember");
+//    model.addAttribute("qnas", qnaService.list2(loginMember.getNo()));
+//    return "qna/list";
+//  }
 
   @GetMapping("detail")
   public Map detail(int no) throws Exception {
-    Qna qna = qnaService.get(no);
-    if (qna == null) {
-      throw new Exception("해당 번호의 게시글이 없습니다!");
-    }
-    Map map = new HashMap();
-    map.put("qna", qna);
-    return map;
-  }
-
-  @GetMapping("answerdetail")
-  public Map answerdetail(int no) throws Exception {
     Qna qna = qnaService.get(no);
     if (qna == null) {
       throw new Exception("해당 번호의 게시글이 없습니다!");
@@ -112,6 +111,13 @@ public class QnaController {
     return "redirect:list";
   }
 
+  private void checkOwner(int qnaNo, HttpSession session) throws Exception {
+    Member loginMember = (Member) session.getAttribute("loginMember");
+    if (qnaService.get(qnaNo).getWriter().getNo() != loginMember.getNo()) {
+      throw new Exception("게시글 작성자가 아닙니다.");
+    }
+  }
+
   @GetMapping("updateform")
   public Map updateform(int no) throws Exception {
     Qna qna = qnaService.get(no);
@@ -124,51 +130,13 @@ public class QnaController {
     return map;
   }
 
-  @GetMapping("answerform")
-  public Map answerform(int no) throws Exception {
-    Qna qna = qnaService.get(no);
-    if (qna == null) {
-      throw new Exception("해당 번호의 게시글이 없습니다!");
-    }
-
-    Map map = new HashMap();
-    map.put("qna", qna);
-    return map;
-  }
-
-  @PostMapping("answerupdate")
-  public String answerUpdate(
-          Qna qna,
-          HttpSession session)
-          throws Exception {
-
-
-      qnaService.answerUpdate(qna);
-//    qna.setAttachedFiles(saveAttachedFiles(files));
-//
-//    checkOwner(qna.getNo(), session);
-
-//    if (!qnaService.update(qna)) {
-//      throw new Exception("게시글을 변경할 수 없습니다!");
-//    }
-
-    return "redirect:list";
-  }
-
-  private void checkOwner(int qnaNo, HttpSession session) throws Exception {
-    Member loginMember = (Member) session.getAttribute("loginMember");
-    if (qnaService.get(qnaNo).getWriter().getNo() != loginMember.getNo()) {
-      throw new Exception("게시글 작성자가 아닙니다.");
-    }
-  }
-
   @GetMapping("delete")
   public String delete(
       int no,
       HttpSession session)
           throws Exception {
 
-    checkOwner(no, session);
+//    checkOwner(no, session);
     if (!qnaService.delete(no)) {
       throw new Exception("게시글을 삭제할 수 없습니다.");
     }

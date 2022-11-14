@@ -74,15 +74,24 @@
             <p>마이원모아</p>
             <span class="mybar">
           </div>
+          
           <ul class="mynav">
-            <li><a href="portfolioList">나의 포트폴리오</a></li>
-            <li><a href="">구매관리</a></li>
-            <li><a href="">판매관리</a></li>
-            <li><a href="">나의 서비스관리</a></li>
-            <li><a href="">결제내역</a></li>
-            <li><a href="">1:1 문의내역</a></li>
-            <li><a href="">계정설정</a></li>
+            <li><a class="font" href="portfolioList">나의 포트폴리오</a></li>
+            <li><a class="font2" href="">구매관리</a></li>
+            <li><a class="font2" href="">판매관리</a></li>
+            <li><a class="font2" href="">나의 서비스관리</a></li>
+            <li><a class="font2" href="">결제내역</a></li>
+            <li><a class="font2" href="">1:1 문의내역</a></li>
+            <li class="menu">
+              <a class="font2" href="myinfo">계정설정</a>
+              <ul class="hide">
+                <li><a class="font2" href="../mypage/myinfo">내정보수정</a></li>
+                <li><a class="font2" href="../mypage/changepw">비밀번호변경</a></li>
+                <li><a class="font2" href="../mypage/leave">회원탈퇴</a></li>
+              </ul>
+            </li>
           </ul>
+          
         </div>
       </li>
       <li class="mypageArea">
@@ -104,8 +113,8 @@
           <a href="firstportfolio?ptNo=1" onClick="window.open(this.href, '', 'width=1000px, height=1080px')"; target="_blank"  data-th-href="@{firstportfolio?(ptNo=${portfolio.ptNo})}">- https://onemoa/portfolio1</a>
           </li>
         </ul>
-
-
+        
+        
       </li>
     </ul>
 

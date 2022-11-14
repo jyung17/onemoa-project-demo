@@ -29,9 +29,6 @@
     </collection>
   </resultMap>
 
-  <!-- 새로운 리절트 맵이다. 변수를 담을 수 있는 수납함
-  (resultMap) qna, no 클래스 느낌. 담을수 있는 서랍임.
-  -->
   <resultMap type="QnaAttachedFile" id="qnaAttachedFileMap">
     <id column="qnafno" property="no"/>
     <result column="fname" property="filename"/>
@@ -52,9 +49,29 @@
     from
       qna q
       join member m on q.mno = m.mno
+      <if test="no != null">
+      where q.mno=#{value}
+      </if>
     order by
       qnano desc
-  </select>
+    </select>
+
+<!--  <select id="findAll2" resultMap="qnaMap">-->
+<!--    select-->
+<!--    q.qnano,-->
+<!--    q.title,-->
+<!--    q.cont,-->
+<!--    q.cdt,-->
+<!--    q.answer,-->
+<!--    q.answerCdt,-->
+<!--    m.mno,-->
+<!--    m.name-->
+<!--    from-->
+<!--    qna q-->
+<!--    join member m on q.mno = m.mno-->
+<!--    where-->
+<!--    m.mno=#{value};-->
+<!--  </select>-->
 
     <select id="findByNo" resultMap="qnaMap">
       select
@@ -87,7 +104,7 @@
       from
         qna
       where
-      qnano = #{value}
+      qnano=#{value}
   </select>
 
   <insert id="insert" parameterType="qna"
@@ -111,7 +128,6 @@
     where qnano=#{no}
   </update>
 
-  <!-- 이 쿼리문 됨..-->
   <delete id="delete">
     delete from qna
     where qnano=#{value}
@@ -125,12 +141,11 @@
   <insert id="insertFiles" parameterType="qna">
     insert into qna_file(fname, fpath, qnano)
     values
-    <foreach collection="attachedFiles" item="file" separator=",">
+    <foreach collection="qnaAttachedFiles" item="file" separator=",">
       (#{file.filename},#{file.filepath},#{no})
     </foreach>
   </insert>
 
-  <!-- 이 쿼리문 됨..-->
   <delete id="deleteFiles">
     delete from qna_file
     where qnano=#{value}
@@ -141,13 +156,11 @@
 <!--    where qnano in (select qnano from qna where mno = #{value})-->
 <!--  </delete>-->
 
-  <!-- 이 쿼리문 됨..-->
   <delete id="deleteFile">
     delete from qna_file
     where qnafno=#{value}
   </delete>
 
-  <!-- 이 쿼리문 됨..-->
   <select id="findFileByNo" resultMap="qnaAttachedFileMap">
     select
       qnafno,
