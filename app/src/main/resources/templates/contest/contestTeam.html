@@ -18,7 +18,7 @@
 </style>
 <body style="overflow-x: hidden">
   <div data-th-replace="/fragments/nav.html :: fragment-nav"></div>
-
+  <input type="hidden" id="uNumber" data-th-if="${member != null}"data-th-value="${member.no}"/>
   <div class="contest">
     <div class="contestbg">
       <img src="/onemoa/img/contestbg.png">
@@ -32,13 +32,16 @@
       </ul>
       <ul class="contype">
         <li>
-          <input type="button" id="sorter-orgType02" class="orgTypeType" name="1" value="대기업">
+          <a href="." class="orgType" value="1" data-th-if="${ono==1}" data-th-text="${ono}"></a>
+          <a href="." class="orgType" value="1" data-th-if="${ono!=1}"  data-th-text="대기업"></a>
         </li>
         <li>
-          <input type="button" id="sorter-orgType03" class="orgTypeType" name="2" value="공공기관">
+          <a href="." class="orgType" value="2" data-th-if="${ono==2}" data-th-text="${ono}"></a>
+          <a href="." class="orgType" value="2" data-th-if="${ono!=2}"  data-th-text="공공기관"></a>
         </li>
         <li>
-          <input type="button" id="sorter-orgType04" class="orgTypeType" name="3" value="자영업자">
+          <a href="." class="orgType" value="3" data-th-if="${ono==3}" data-th-text="${ono}"></a>
+          <a href="." class="orgType" value="3" data-th-if="${ono!=3}"  data-th-text="자영업자"></a>
         </li>
       </ul>
 
@@ -46,7 +49,7 @@
         <li><a href="#">상금 순</a></li>
         <li><a href="#">조회 순</a></li>
         <li><a href="#">마감임박 순</a></li>
-        <li><input type="button" id="sortCreatDate" data-type="" data-th-data-type="${sortCd}" value="최신등록 순"></li>
+        <li><a href="." class="sortType" data-type="" data-th-data-type="${sortCd}" value="최신등록 순">최신등록 순</a></li>
       </ul>
     </div>
 
@@ -254,7 +257,7 @@
             <button class="closebtn4" onclick="clo3()"><img src="../img/x.png"></button>
             <p>팀원을 모집하시겠습니까?</p>
             <div class="teamb">
-              <span><button id="leaderJoin">확인</button></span>
+              <span><button onclick="dis()">확인</button></span>
               <span><button onclick="clo3()">취소</button></span>
             </div>
           </div>
@@ -271,8 +274,8 @@
                 <li>
                   <div class="tjdimg2">
                     <img id="xx-readerProfile" src="../img/profile1.png">
-                  </div>
                   <p id="xx-readerNickname2">닉네임</p>
+                  </div>
                 </li>
                 <li>
                   <p id="xx-readerContent">[나를 소개하는 글]
@@ -331,7 +334,7 @@
               <ul class="tjd">
                 <li>
                   <div class="tjdimg">
-                    <img id="xx-fieldMemberProfile" src="/onemoa/img/profile1.png">
+                    <img id="xx-fieldMemberProfile" src="/onemoa/img/profile1.png" style="width: 70%; height: auto;">
                   </div>
                   <p id="xx-fieldMemberNickname">닉네임</p>
                 </li>
@@ -342,10 +345,8 @@
             </div>
 
             <div class="portfolio">
-              <p>포트폴리오
-                <button name="addStaff3"><img src="/onemoa/img/plus.png"></button>
-              </p>
-              <div name="hhhhhh2">
+              <p>포트폴리오</p>
+              <div name="hhhhhh2" class="hhhhhh2">
                 <select name="port2" class="po2" id="xx-fieldMemberPortfolioSelectBox" onchange="fieldMemberDetailPortfolioBoxChange()">
 <!--                  <option value="포트폴리오를 선택해주세요." selected>포트폴리오를 선택해주세요.</option>-->
 <!--                  <option value="포트폴리오1">포트폴리오1</option>-->
@@ -355,7 +356,8 @@
             </div>
 
             <div class="recruitment">
-              <p id="xx-innerRecruitment">지원분야를 선택해주세요.</p>
+              <p class="choice">지원분야를 선택해주세요.</p>
+              <p id="xx-innerRecruitment"></p>
 <!--              <p><input type="checkbox" name="recruitmentCheckbox" value="촬영"> 촬영</p>-->
 <!--              <p><input type="checkbox" name="recruitmentCheckbox" value="편집"> 편집</p>-->
 <!--              <p><input type="checkbox" name="recruitmentCheckbox" value="음향"> 음향</p>-->
@@ -418,9 +420,9 @@
               </ul>
             </div>
 
-            <div class="teammate8">
-              <button class="tm8" onclick="dis8()">팀원 채택하기</button>
-              <button class="tm8" onclick="clo7()">뒤로가기</button>
+            <div id="teammate8" class="teammate8">
+<!--              <button id="tm8" class="tm8" onclick="dis8()">팀원 채택하기</button>-->
+<!--              <button class="tm8" onclick="clo7()">뒤로가기</button>-->
             </div>
 
           </div>
@@ -432,11 +434,24 @@
             <button class="closebtn9" onclick="clo8()"><img src="/onemoa/img/x.png"></button>
             <p>팀원으로 지원을하시겠습니까?</p>
             <div class="teamb9">
-              <span><button onclick="dis8()">확인</button></span>
+              <span><button id="teamb9" onclick="dis8(this.value)">확인</button></span>
               <span><button onclick="clo8()">취소</button></span>
             </div>
           </div>
         </div><!--modal9-->
+
+
+<!--        &lt;!&ndash;modal10 팀원취소하기확인&ndash;&gt;-->
+<!--        <div class="modal10" style="position: absolute; z-index: 1;">-->
+<!--          <div class="modal_body10">-->
+<!--            <button class="closebtn10" onclick="clo8()"><img src="/onemoa/img/x.png"></button>-->
+<!--            <p>팀원으로 지원을하시겠습니까?</p>-->
+<!--            <div class="teamb10">-->
+<!--              <span><button id="teamb10" onclick="dis8(this.value)">확인</button></span>-->
+<!--              <span><button onclick="clo8()">취소</button></span>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>&lt;!&ndash;modal9&ndash;&gt;-->
 
 
         <!-- 콘테스트 리스트-->
