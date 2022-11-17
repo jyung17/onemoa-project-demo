@@ -6,13 +6,17 @@ import com.bitcamp.onemoaproject.vo.contest.ContestTeam;
 import com.bitcamp.onemoaproject.vo.contest.ContestTeamField;
 import com.bitcamp.onemoaproject.vo.contest.ContestTeamFieldMember;
 import java.util.List;
+import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface ContestDao {
   
-  List<Contest> findAll(@Param("no") String no, @Param("ono")String ono, @Param("sortCd") String sortCd);  // 공모전 리스트
+  List<Map<String, Object>> findAll(Map map);  // 공모전 리스트
+  
+  // 공모전 리스트
+  int findAllContestCount();
   
   List<Contest> findAll2(
       @Param("no") String no,
@@ -71,4 +75,10 @@ public interface ContestDao {
   
   // 공모전 조회수 증가
   int updateViewCount(int no);
+  
+  // 메인페이지 인기 공모전
+  List<Contest> findByMain();
+  
+  // 마이페이지 공모전 팀전 참가내역
+  List<Contest> findAllByMyContestList(int mno);
 }

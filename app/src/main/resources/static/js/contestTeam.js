@@ -139,6 +139,8 @@ function personnelSelect() {
   $("#innerRecruitment").append(bList);
 }
 
+
+
 function clo2(){
   if ($('.modal3').css('display') == 'show'){
     $('.modal3').hide();
@@ -168,6 +170,11 @@ function closeTest() {
     $('.modal5').show();
   }
 }
+
+function clo6(){
+  $('.modal7').hide();
+}
+
 
 // 팀원 모집하기 등록 버튼
 function leaderjoin() {
@@ -345,7 +352,7 @@ function fieldMemberList() {
           if(uNumber != readerNumber){
             console.log("일반 사용자");
             fieldMember +=
-                "<ul style='width: 100%; height: 120px;'>" +
+                "<ul style='width: 100%; height: 150px;'>" +
                 "<li style='float:left; width: 20%;'>" +
                 "<img src='/onemoa/member/files/" + result3[i].contestTeamFieldMembers[j].applicant.profile + "'style='width: 50%; margin-left: 20%;border-radius: 70%;overflow: hidden;'>" +
                 "</li>" +
@@ -358,11 +365,11 @@ function fieldMemberList() {
                 "<a href='#' id='tfmno-" + result3[i].contestTeamFieldMembers[j].tfmno + "' onclick='dis7(this.id, this.text)'>지원자보기</a>" +
                 "</p></li></ul>";
           }
-          else if (type === "미승인") {
+          else if (type == "미승인") {
             console.log("if");
             console.log(type);
             fieldMember +=
-                "<ul style='width: 100%; height: 120px;'>" +
+                "<ul style='width: 100%; height: 150px;'>" +
                 "<li style='float:left; width: 20%;'>" +
                 "<img src='/onemoa/member/files/" + result3[i].contestTeamFieldMembers[j].applicant.profile + "'style='width: 50%; margin-left: 20%;border-radius: 70%;overflow: hidden;'>" +
                 "</li>" +
@@ -378,7 +385,7 @@ function fieldMemberList() {
             console.log("else");
             console.log(type);
             fieldMember +=
-                "<ul style='width: 100%; height: 120px;'>" +
+                "<ul style='width: 100%; height: 150px;'>" +
                 "<li style='float:left; width: 20%;'>" +
                 "<img src='/onemoa/member/files/" + result3[i].contestTeamFieldMembers[j].applicant.profile + "'style='width: 50%; margin-left: 20%;border-radius: 70%;overflow: hidden;'>" +
                 "</li>" +
@@ -417,12 +424,15 @@ function dis7(clicked_id) {
   console.log($("#uNumber").val());
   let uNumber = $("#uNumber").val();
   console.log(uNumber == readerNumber);
-  if (uNumber === readerNumber) {
+  let temp = uNumber == readerNumber;
+  if (temp == true) {
+    console.log("if")
     $("#teammate8").html(
         "<button id=\"tm8\" class=\"tm8\" onclick=\"dis8()\">팀원 채택하기</button>\n"
         + "<button class=\"tm8\" onclick=\"clo7()\">뒤로가기</button>"
     )
-  } else {
+  } else if (temp == false) {
+    console.log("else if")
     $("#teammate8").html(
         "<button class=\"tm8\" onclick=\"clo7()\">뒤로가기</button>"
     )
@@ -553,11 +563,23 @@ function dis5(){
   fieldMemberDetailField();
 
   if ($('.modal6').css('display') == 'none'){
-    $('.modal4').show(); // 팀원 모집확인 모달 창 -> 확인 필요
+    $('.modal5').show(); // 팀원 모집확인 모달 창 -> 확인 필요 -> 확인완료
     $('.modal6').show(); // 팀원 지원하기 모달 창
   } else{
-    $('.modal4').show();
+     $('.modal5').show();
     $('.modal6').hide();
+    $('.modal7').hide();
+  }
+}
+
+// 팀원지원하기 뒤로가기 버튼
+function clob(){
+  if ($('.modal6').css('display') == 'show'){
+    $('.modal6').hide();
+    $('.modal5').show();
+  } else{
+    $('.modal6').hide();
+    $('.modal5').show();
   }
 }
 
@@ -615,14 +637,14 @@ function fieldMemberDetailField() {
 function dis6(){
   teamJoin();
   teamReaderDetail(); // 팀장 상세보기 모달창
-
-  if ($('.modal6').css('display') == 'show'){
-    $('.modal6').hide();
-    $('.modal5').show();
+  
+  if ($('.modal7').css('display') == 'none'){
+    $('.modal6').show();
+    $('.modal7').show();
   } else{
-    $('.modal6').hide();
-    $('.modal5').show();
+    $('.modal7').hide();
   }
+
 }
 
 // 팀원 지원하기
@@ -681,13 +703,7 @@ function fieldMemberDetailPortfolioBoxChange() {
 }
 
 function clo5(){
-  if ($('.modal5').css('display') == 'show'){
-    $('.modal5').hide();
-    $('.modal2').show();
-  } else{
-    $('.modal5').hide();
-    $('.modal2').show();
-  }
+    $('.modal7').hide();
 }
 
 // 포폴 추가 버튼
@@ -826,71 +842,179 @@ $(document).on("click","button[name=minus2]",function(){
   trHtml2.remove(); //tr 테그 삭제
 });
 
-// 페이지 필터 타입(전체, 대기업, 공공기관, 자영업자)
-$(".orgType").click(function (e) {
-  e.preventDefault();
 
-  let url = location.href;
-  let urlParam = location.search;
-  let orgNumber = $(this).attr("value");
-  if (url.includes("ono")) {
-    window.location.href = url.substring(url.lastIndexOf("&"), length) + "&ono=" + orgNumber;
-  }
-  else {
-    window.location.href = "/onemoa/contest/contestTeam" + urlParam + "&ono=" + orgNumber;
-  }
+// 페이지 필터 타입(대기업, 공공기관, 자영업자)
+$(".orgType").click(function () {
+  // 현재 noType 클래스의 value 속성값 가져온다(all, 개인전, 팀전)
+  let no = $(".noType").attr("value");
+  // 2차분류 대기업, 공공기관, 자영업자 버튼 클릭시 해당 value의 속성값을 가져온다.
+  let ono = $(this).attr("value");
+  console.log(ono);
+  window.location.href="/onemoa/contest/contestTeam?no=" + no + "&ono=" + ono;
 });
 
-//let createdSort = document.querySelector("sortType");
-let createdSort = $(".sortType");
-//let createdSortType = createdSort.getAttribute("data-type");
-let createdSortType = createdSort.attr("data-type");
-let flag = "최신등록 순";
+// 페이지 정렬(등록순, 마감임박순, 조회순, 상금순)
+let createdSort = document.getElementById("sortCreatDate");
+let endDateSort = document.getElementById("sortEndDate");
+let viewCountSort = document.getElementById("sortViewCount");
+let rewardSort = document.getElementById("sortReward");
+let createdSortType = createdSort.getAttribute("data-type");
+let endDateSortType = endDateSort.getAttribute("data-type");
+let viewCountSortType = viewCountSort.getAttribute("data-type");
+let rewardSortType = rewardSort.getAttribute("data-type");
+let sortCdFlag = "등록순";
+let sortEdFlag = "마감임박순";
+let sortVwFlag = "조회순";
+let sortRwFlag = "상금순";
 
 if (createdSortType == "" || createdSortType == null) {
-  createdSort.innerHTML = "제목";
+  createdSort.innerHTML = "등록순";
 } else if (createdSortType == "desc") {
-  createdSort.innerHTML = "제목V";
+  createdSort.innerHTML = "등록순&#30";
 } else {
-  createdSort.innerHTML = "제목^";
+  createdSort.innerHTML = "등록순&#31";
 }
 
-// document.querySelector(".sortType").onclick = (e) => {
-$(".sortType").click(function(e) {
-  e.preventDefault();
+if (endDateSortType == "" || endDateSortType == null) {
+  endDateSort.innerHTML = "마감임박순";
+} else if (endDateSortType == "desc") {
+  endDateSort.innerHTML = "마감임박순&#30";
+} else {
+  endDateSort.innerHTML = "마감임박순^";
+}
 
-  let flag = "최신등록순";
+if (viewCountSortType == "" || viewCountSortType == null) {
+  viewCountSort.innerHTML = "조회순";
+} else if (viewCountSortType == "desc") {
+  viewCountSort.innerHTML = "조회순&#30";
+} else {
+  viewCountSort.innerHTML = "조회순&#31";
+}
+
+if (rewardSortType == "" || rewardSortType == null) {
+  rewardSort.innerHTML = "상금순";
+} else if (rewardSortType == "desc") {
+  rewardSort.innerHTML = "상금순&#30";
+} else {
+  rewardSort.innerHTML = "상금순&#31";
+}
+
+document.querySelector("#sortCreatDate").onclick = (e) => {
+  e.preventDefault();
+  let sortCdFlag = "등록순";
   if (createdSortType == "" || createdSortType == null) {
     createdSortType = "desc";
-    flag += "V";
+    sortCdFlag += "V";
   } else if (createdSortType == "desc") {
     createdSortType = "asc";
-    flag += "^";
+    sortCdFlag += "^";
   } else {
     createdSortType = "";
-    flag += "";
+    sortCdFlag += "";
   }
-  console.log("createdSortType: " + createdSortType);
   e.target.setAttribute("data-type", createdSortType);
-  e.target.innerHTML = flag;
+  e.target.innerHTML = sortCdFlag;
 
   let sortCd = ""
   if (createdSortType != "") {
     sortCd = "&sortCd=" + createdSortType;
   }
 
-  let url = location.href;
-  let urlParam = location.search;
+  noParam = $(".noType").attr("value");
+  onoParam = $("#onoType").attr("value");
+  if ($("#onoType").attr("value") == '') {
+    window.location.href="/onemoa/contest/contestTeam?no=" + noParam + sortCd;
+  } else {
+    window.location.href="/onemoa/contest/contestTeam?no=" + noParam + "&ono=" + onoParam + sortCd;
+  }
+}
 
-  if (url.includes("sortCd") && url.includes("ono")) {
-    window.location.href = url.substring(url.lastIndexOf("&"), length) + sortCd;
+document.querySelector("#sortEndDate").onclick = (e) => {
+  e.preventDefault();
+  let sortEdFlag = "등록순";
+  if (endDateSortType == "" || endDateSortType == null) {
+    endDateSortType = "desc";
+    sortEdFlag += "V";
+  } else if (endDateSortType == "desc") {
+    endDateSortType = "asc";
+    sortEdFlag += "^";
+  } else {
+    endDateSortType = "";
+    sortEdFlag += "";
   }
-  else if (url.includes("ono")) {
-    window.location.href = "/onemoa/contest/contestTeam" + urlParam + sortCd;
+  e.target.setAttribute("data-type", endDateSortType);
+  e.target.innerHTML = sortEdFlag;
+
+  let sortEd = ""
+  if (endDateSortType != "") {
+    sortEd = "&sortEd=" + endDateSortType;
   }
-  else if (url.includes("sortCd") && url.includes("no")) {
-    window.location.href = url.substring(url.lastIndexOf("&"), length) + sortCd;
-  } else if (url.includes("no")) {
-    window.location.href = "/onemoa/contest/contestTeam" + urlParam + sortCd;
+
+  noParam = $(".noType").attr("value");
+  onoParam = $("#onoType").attr("value");
+  if ($("#onoType").attr("value") == '') {
+    window.location.href="/onemoa/contest/contestTeam?no=" + noParam + sortEd;
+  }  else {
+    window.location.href="/onemoa/contest/contestTeam?no=" + noParam + "&ono=" + onoParam + sortEd;
   }
-});
+}
+
+document.querySelector("#sortViewCount").onclick = (e) => {
+  e.preventDefault();
+  let sortVwFlag = "조회순";
+  if (viewCountSortType == "" || viewCountSortType == null) {
+    viewCountSortType = "desc";
+    sortVwFlag += "V";
+  } else if (viewCountSortType == "desc") {
+    viewCountSortType = "asc";
+    sortVwFlag += "^";
+  } else {
+    viewCountSortType = "";
+    sortVwFlag += "";
+  }
+  e.target.setAttribute("data-type", viewCountSortType);
+  e.target.innerHTML = sortVwFlag;
+
+  let sortVw = ""
+  if (viewCountSortType != "") {
+    sortVw = "&sortVw=" + viewCountSortType;
+  }
+
+  noParam = $(".noType").attr("value");
+  onoParam = $("#onoType").attr("value");
+  if ($("#onoType").attr("value") == '') {
+    window.location.href="/onemoa/contest/contestTeam?no=" + noParam + sortVw;
+  } else {
+    window.location.href="/onemoa/contest/contestTeam?no=" + noParam + "&ono=" + onoParam + sortVw;
+  }
+}
+
+document.querySelector("#sortReward").onclick = (e) => {
+  e.preventDefault();
+  let sortRwFlag = "조회순";
+  if (rewardSortType == "" || rewardSortType == null) {
+    rewardSortType = "desc";
+    sortRwFlag += "V";
+  } else if (rewardSortType == "desc") {
+    rewardSortType = "asc";
+    sortRwFlag += "^";
+  } else {
+    rewardSortType = "";
+    sortRwFlag += "";
+  }
+  e.target.setAttribute("data-type", rewardSortType);
+  e.target.innerHTML = sortRwFlag;
+
+  let rewardSort = ""
+  if (rewardSortType != "") {
+    rewardSort = "&sortRw=" + rewardSortType;
+  }
+
+  noParam = $(".noType").attr("value");
+  onoParam = $("#onoType").attr("value");
+  if ($("#onoType").attr("value") == '') {
+    window.location.href="/onemoa/contest/contestTeam?no=" + noParam + rewardSort;
+  } else {
+    window.location.href="/onemoa/contest/contestTeam?no=" + noParam + "&ono=" + onoParam + rewardSort;
+  }
+}

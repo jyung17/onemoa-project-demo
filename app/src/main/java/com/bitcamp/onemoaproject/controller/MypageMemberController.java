@@ -1,5 +1,6 @@
 package com.bitcamp.onemoaproject.controller;
 
+import com.bitcamp.onemoaproject.service.ContestService;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,11 +11,13 @@ import java.util.UUID;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import com.bitcamp.onemoaproject.service.MemberService;
 import com.bitcamp.onemoaproject.service.PortfolioService;
@@ -29,6 +32,9 @@ public class MypageMemberController {
   ServletContext sc;
   MemberService memberService;
   PortfolioService portfolioService;
+  
+  @Autowired
+  ContestService contestService;
 
   public MypageMemberController(MemberService memberService, ServletContext sc, PortfolioService portfolioService) {
     System.out.println("MemberController() 호출됨!");
@@ -50,25 +56,30 @@ public class MypageMemberController {
     // 1. 현재 비밀번호 맞는지 체크
     Member loginMember = (Member) session.getAttribute("loginMember");
     String email = loginMember.getEmail();
-    Member member = memberService.get(loginMember.getNo());
-
-    // boolean isPasswdRight = BCrypt.checkpw(password, member.getPassword());
-
-    // System.out.println(isPasswdRight);
-
-    //    if(!password.equals(member.getPassword())) { // 현제 비밀번호가 일치하기않으면
-    //      throw new Exception("현제 패스워드가 일치하지 않습니다.");
-    //    }
 
     // 2. 새 비밀번호, 새비밀번호 확인 맞는지 체크
     if (newPassword.equals(newPasswordConfirm) == false) { // 새 비밀번호와 새 비밀번호 확인이 일치하기않으면
       throw new Exception("새 비밀번호와 새 비밀번호 확인이 서로 일치하지 않습니다.");
     }
-
     // 3. DB 비밀번호 변경
     memberService.modifyPasswd(email, newPassword);
+    return "redirect:changepwResult";
+  }
 
-    return "redirect:changepwResult"; 
+
+  @ResponseBody
+  @PostMapping("checkCurrentPassword")
+  public String checkCurrentPassowrd(String password, HttpSession session) throws Exception {
+    // 1. 현재 비밀번호 맞는지 체크
+    Member loginMember = (Member) session.getAttribute("loginMember");
+
+    int result = memberService.getPasswordCheck(password, loginMember.getNo());
+    System.out.println("result = " + result);
+
+    if (result > 0) {
+      return "true";
+    }
+    return "false";
 
   }
 
@@ -194,6 +205,7 @@ public class MypageMemberController {
     map.put("portfolio", portfolio);
     //    map.get("portfolio");
     //    System.out.println(map.get("portfolio"));
+    System.out.println("portfolio = " + portfolio);
     return map;
   }
 
@@ -298,7 +310,14 @@ public class MypageMemberController {
 
     return "redirect:portfolioDetail?ptNo=" + portfolio.getPtNo();
   }
-
+  
+  // 마이페이지 공모전 참여내역
+  @GetMapping("contestList")
+  public void myContestList(Model model, HttpSession session) throws Exception{
+    Member loginMember = (Member) session.getAttribute("loginMember");
+    model.addAttribute("member", memberService.get(loginMember.getNo()));
+    model.addAttribute("contests", contestService.myContestList(loginMember.getNo()));
+  }
 }
 
 

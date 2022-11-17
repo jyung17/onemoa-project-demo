@@ -9,13 +9,6 @@
   <script src="/onemoa/js/login.js"></script>
   <script src="/onemoa/node_modules/sweetalert/dist/sweetalert.min.js"></script>
 </head>
-<style>
-  /*#xx-fieldMemberUl img {*/
-  /*  width: 15%;*/
-  /*  height: auto;*/
-  /*  border-radius: 70%;*/
-  /*}*/
-</style>
 <body style="overflow-x: hidden">
   <div data-th-replace="/fragments/nav.html :: fragment-nav"></div>
   <input type="hidden" id="uNumber" data-th-if="${member != null}"data-th-value="${member.no}"/>
@@ -26,30 +19,32 @@
 
     <div class="contestctg">
       <ul class="conctg">
-        <li><a href="/onemoa/contest/contestTeam?no=all">전체</a></li>
-        <li><a href="/onemoa/contest/contestTeam?no=개인전">개인전</a></li>
-        <li><a href="/onemoa/contest/contestTeam?no=팀전">팀전</a></li>
+        <li><a class="noType font" href="/onemoa/contest/contestTeam?no=all" data-th-value="${no}">전체</a></li>
+        <li><a class="noType font" href="/onemoa/contest/contestTeam?no=개인전" data-th-value="${no}">개인전</a></li>
+        <li><a class="noType font" href="/onemoa/contest/contestTeam?no=팀전" data-th-value="${no}">팀전</a></li>
       </ul>
       <ul class="contype">
         <li>
-          <a href="." class="orgType" value="1" data-th-if="${ono==1}" data-th-text="${ono}"></a>
-          <a href="." class="orgType" value="1" data-th-if="${ono!=1}"  data-th-text="대기업"></a>
+          <a href="#" class="font orgType" value="1" data-th-if="${ono==1}" data-type="" data-th-text="${ono}"></a>
+          <a href="#" class="orgType font" value="1" data-th-if="${ono!=1}" data-th-text="대기업"></a>
         </li>
         <li>
-          <a href="." class="orgType" value="2" data-th-if="${ono==2}" data-th-text="${ono}"></a>
-          <a href="." class="orgType" value="2" data-th-if="${ono!=2}"  data-th-text="공공기관"></a>
+          <a href="#" class="orgType font" value="2" data-th-if="${ono==2}" data-th-text="${ono}"></a>
+          <a href="#" class="orgType font" value="2" data-th-if="${ono!=2}" data-th-text="공공기관"></a>
         </li>
         <li>
-          <a href="." class="orgType" value="3" data-th-if="${ono==3}" data-th-text="${ono}"></a>
-          <a href="." class="orgType" value="3" data-th-if="${ono!=3}"  data-th-text="자영업자"></a>
+          <a href="#" class="orgType font" value="3" data-th-if="${ono==3}" data-th-text="${ono}"></a>
+          <a href="#" class="orgType font" value="3" data-th-if="${ono!=3}" data-th-text="자영업자"></a>
         </li>
       </ul>
 
+      <input id="onoType" type="hidden" data-th-value="${ono}">
+
       <ul class="contype2">
-        <li><a href="#">상금 순</a></li>
-        <li><a href="#">조회 순</a></li>
-        <li><a href="#">마감임박 순</a></li>
-        <li><a href="." class="sortType" data-type="" data-th-data-type="${sortCd}" value="최신등록 순">최신등록 순</a></li>
+        <li><a href="." class="font" id="sortReward" value="sortRw" data-type="" data-th-data-type="${sortRw}">상금순</a></li>
+        <li><a href="." class="font" id="sortViewCount" value="sortVw" data-type="" data-th-data-type="${sortVw}">조회순</a></li>
+        <li><a href="." class="font" id="sortEndDate" value="sortEd" data-type="" data-th-data-type="${sortEd}">마감임박순</a></li>
+        <li><a href="." class="font" id="sortCreatDate" value="sortCd" data-type="" data-th-data-type="${sortCd}">등록순</a></li>
       </ul>
     </div>
 
@@ -118,7 +113,7 @@
 
             <div class="contestdtype">
               <p onclick="team()"><a href="#">상세정보</a></p>
-              <p id="contestTypeTeam" onclick="team()">팀원구해요</a></p>
+              <p id="contestTypeTeam" onclick="team()"><a href="#">팀원구해요</a></p>
               <span></span>
             </div>
 
@@ -174,13 +169,13 @@
 <!--                  <p>닉네임</p>-->
 <!--                </li>-->
               </ul>
-
               <div class="insert">
                 <p>나를 등록하고, <span>나에게 필요한 팀원을 구해보세요.</span></p>
                 <div class="insertbtn">
                   <p onclick="dis2()">팀원 모집하기</p>
                 </div>
               </div>
+
             </div>
           </div>
         </div><!--modal2-->
@@ -195,7 +190,7 @@
                 <ul class="tjd">
                   <li>
                     <div class="tjdimg">
-                      <img id="teamRecruitFormReaderProfile" src="../img/profile1.png">
+                      <img id="teamRecruitFormReaderProfile" src="../img/profile1.png" style="width: 100%; height: auto; border-radius: 70%; overflow: hidden; margin-left: 14%;">
                     </div>
                     <input type="hidden" id="teamRecruitFormReaderNo">
                     <p id="teamRecruitFormReaderNickname">닉네임</p>
@@ -207,21 +202,17 @@
               </div>
 
               <div class="portfolio">
-                <p>포트폴리오
-                  <button name="addStaff"><img src="../img/plus.png"></button>
-                </p>
+                <p>포트폴리오</p>
                 <div name="hhhhhh">
                   <select id="xx-portfolioBox" name="port" class="po" onchange="portfolioBoxChange()">
                     <option value="포트폴리오를 선택해주세요." selected>포트폴리오를 선택해주세요.</option>
                   </select>
-                  <ul id="innerPortfolio"></ul>
                 </div>
+                  <ul id="innerPortfolio" class="popopo"></ul>
               </div>
 
               <div class="recruitment">
-                <p>모집분야와 인원을 선택해주세요.
-                  <button name="addStaff2"><img src="../img/plus.png"></button>
-                </p>
+                <p>모집분야와 인원을 선택해주세요.</p>
                 <div name = "rrr" class="recruit">
                   <select id="xx-recru" name="recru" class="re">
                     <option value="모집분야를 선택해주세요." selected>모집분야를 선택해주세요.</option>
@@ -229,7 +220,7 @@
                     <option value="편집">편집</option>
                     <option value="음향">음향</option>
                   </select>
-                  <select  id="xx-personnel" name="personnel" class="re2" onchange="personnelSelect()">
+                  <select id="xx-personnel" name="personnel" class="re2" onchange="personnelSelect()">
                     <option value="인원" selected>인원</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
@@ -239,9 +230,7 @@
                     <option value="6">6</option>
                   </select>
                 </div>
-                <ul id="innerRecruitment">
-
-                </ul>
+                <ul id="innerRecruitment" class="rerere"></ul>
               </div>
 
               <div class="teammate">
@@ -257,8 +246,8 @@
             <button class="closebtn4" onclick="clo3()"><img src="../img/x.png"></button>
             <p>팀원을 모집하시겠습니까?</p>
             <div class="teamb">
-              <span><button onclick="dis()">확인</button></span>
-              <span><button onclick="clo3()">취소</button></span>
+              <button class="leaderJoinBtn" onclick="dis()">확인</button>
+              <button class="leaderJoinBtn" onclick="clo3()">취소</button>
             </div>
           </div>
         </div><!--modal4-->
@@ -311,14 +300,7 @@
             </div>
 
             <div class="portfolio2" id="xx-fieldMemberUl">
-              <ul>
-                <li><img src="../img/profile1.png"></li>
-                <li>
-                  <p>촬영 지원합니다!</p>
-                  <p><a href="#">수정</a><a href="#">삭제</a></p>
-                </li>
-                <li><p><a href="#"></a>지원자 보기</p></li>
-              </ul>
+              
             </div>
           </div>
         </div><!--modal5-->
@@ -366,7 +348,7 @@
             <div class="teammate">
 <!--              <button class="tm" onclick="dis3()">팀원 지원하기</button>-->
               <button class="tm" onclick="dis6()">팀원 지원하기</button>
-              <button class="tm" onclick="clo2()">뒤로가기</button>
+              <button class="tm" onclick="clob()">뒤로가기</button>
             </div>
 
           </div>
@@ -378,10 +360,12 @@
           <div class="modal_body7">
             <button class="closebtn7" onclick="clo5()"><img src="/onemoa/img/x.png"></button>
             <p>팀원으로 지원을하시겠습니까?</p>
+            
             <div class="teamb7">
-              <span><button onclick="dis5()">확인</button></span>
-              <span><button onclick="clo6()">취소</button></span>
+              <button class="leaderJoinBtn" id="leaderJoin" onclick="dis5()">확인</button>
+              <button class="leaderJoinBtn" onclick="clo6()">취소</button>
             </div>
+            
           </div>
         </div><!--modal7-->
 
@@ -496,11 +480,19 @@
     </div>
 
     <div class="nextBox">
-      <p>
-        <span><a href="#">1</a></span>
-        <span><a href="#">2</a></span>
-        <span><a href="#">3</a></span>
-      </p>
+      <nav class="xx-nav" aria-label="pagination">
+        <ul class="xx-pagination">
+          <li data-th-if="${pageMaker.prev}">
+            <a data-th-href="@{contestTeam(pageMaker.startPage-1)}"><span aria-hidden="true">이전페이지</span><span class="xx-visuallyhidden">previous set of pages</span></a>
+          </li>
+          <data-th-block data-th-each="pageNum: ${#numbers.sequence(pageMaker.startPage, pageMaker.endPage)}">
+            <li><a data-th-href="@{contestTeam(page=${pageNum})}"><span class="xx-visuallyhidden">page </span><span data-th-text="${pageNum}"></span></a></li>
+          </data-th-block>
+          <li data-th-if="${pageMaker.next && pageMaker.endPage >0}">
+            <a data-th-href="@{contestTeam(page=${pageMaker.endPage+1})}"><span class="xx-visuallyhidden">next set of pages</span><span aria-hidden="true">다음페이지</span></a>
+          </li>
+        </ul>
+      </nav>
     </div>
   </div>
 
