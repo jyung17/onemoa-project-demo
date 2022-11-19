@@ -1,10 +1,6 @@
 package com.bitcamp.onemoaproject.dao.orderDao;
 
-import com.bitcamp.onemoaproject.vo.Qna;
 import com.bitcamp.onemoaproject.vo.order.Order;
-import com.bitcamp.onemoaproject.vo.order.OrderStatus;
-import com.bitcamp.onemoaproject.vo.product.AttachedFile;
-import com.bitcamp.onemoaproject.vo.product.Product;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
