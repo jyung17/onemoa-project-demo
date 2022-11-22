@@ -7,7 +7,7 @@ import com.bitcamp.onemoaproject.vo.paging.Criteria;
 import com.bitcamp.onemoaproject.vo.product.AttachedFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.bitcamp.onemoaproject.dao.productDao.ProductDao;
+import com.bitcamp.onemoaproject.dao.product.ProductDao;
 import com.bitcamp.onemoaproject.vo.product.Product;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -58,15 +58,6 @@ public class DefaultProductService implements ProductService {
     return productDao.delete(no) > 0;
   }
 
-  @Override
-  public AttachedFile getAttachedFile(int fileNo) throws Exception {
-    return productDao.findFileByNo(fileNo);
-  }
-
-  @Override
-  public boolean deleteAttachedFile(int fileNo) throws Exception {
-    return productDao.deleteFile(fileNo) > 0;
-  }
 
   @Override
   public List<Product> list(String code) throws Exception {
@@ -87,6 +78,16 @@ public class DefaultProductService implements ProductService {
   public int countProductListTotal(String code) {
     return productDao.countProductList(code);
   }
+  @Override
+  public AttachedFile getAttachedFile(int fileNo) throws Exception {
+    return productDao.findFileByNo(fileNo);
+  }
+
+  @Override
+  public boolean deleteAttachedFile(int fileNo) throws Exception {
+    return productDao.deleteFile(fileNo) > 0;
+  }
+
 
 //  public double getReviewAvg(int productNo) throws Exception {
 //    return productDao.getReviewAvg(productNo);

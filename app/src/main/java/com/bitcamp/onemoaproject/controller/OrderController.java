@@ -1,7 +1,8 @@
 package com.bitcamp.onemoaproject.controller;
 
-import com.bitcamp.onemoaproject.service.order.DefaultOrderService;
+
 import com.bitcamp.onemoaproject.service.MemberService;
+import com.bitcamp.onemoaproject.service.order.OrderService;
 import com.bitcamp.onemoaproject.service.productService.ProductService;
 import com.bitcamp.onemoaproject.vo.Member;
 import com.bitcamp.onemoaproject.vo.order.Order;
@@ -29,7 +30,7 @@ public class OrderController {
   MemberService memberService;
 
   @Autowired
-  DefaultOrderService orderService;
+  OrderService orderService;
 
   @PostMapping("form")
   public void form(Model model, int no, HttpSession session) throws Exception {
@@ -43,7 +44,6 @@ public class OrderController {
     model.addAttribute("product", product);
   }
 
-//  @ResponseBody
   @PostMapping("add") // 재능판매 게시판 : 게시글 등록
   public String add(@RequestParam("no") int no, Order order, HttpSession session, Model model) throws Exception {
 

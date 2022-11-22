@@ -67,6 +67,7 @@
     }
 
     .caption > p {
+      word-break: break-all;
       max-height: 3vw;
       min-height: 3vw;
       margin-top: 5px;
@@ -111,8 +112,8 @@
 <ul class="myPage">
   <li class="mypageArea">
     <div class="nick">
-      <img src="../img/profile1.png">
-      <p>닉네임님</p>
+      <img data-th-src="${'/onemoa/member/files/' + session.loginMember.profile}">
+      <p data-th-text="${session.loginMember.nickname}">닉네임님</p>
     </div>
     <div class="mypageNav">
       <div class="myonemoa">
@@ -120,13 +121,21 @@
         <span class="mybar">
       </div>
       <ul class="mynav">
-        <li><a href="portfolioList">나의 포트폴리오</a></li>
-        <li><a href="">구매관리</a></li>
-        <li><a href="">상품관리</a></li>
-        <li><a href="">나의 서비스관리</a></li>
-        <li><a href="">결제내역</a></li>
-        <li><a href="">1:1 문의내역</a></li>
-        <li><a href="">계정설정</a></li>
+        <li><a class="font2" href="../mypage/portfolioList">포트폴리오 관리</a></li>
+        <li><a class="font2" href="/onemoa/mypage/contestList">공모전 관리</a></li>
+        <li><a class="font2" href="/onemoa/mypage/buysList">구매 관리</a></li>
+        <li><a class="font2" href="/onemoa/mypage/salesList">판매 관리</a></li>
+        <li><a class="font" href="/onemoa/mypage/productList">상품 관리</a></li>
+        <li><a class="font2" href="">결제내역</a></li>
+        <li><a class="font2" href="">1:1 문의내역</a></li>
+        <li class="menu">
+          <a class="font2" href="myinfo">계정설정</a>
+          <ul class="hide">
+            <li><a class="font2" href="../mypage/myinfo">내정보수정</a></li>
+            <li><a class="font2" href="../mypage/changepw">비밀번호변경</a></li>
+            <li><a class="font2" href="../mypage/leave">회원탈퇴</a></li>
+          </ul>
+        </li>
       </ul>
     </div>
   </li>
@@ -136,15 +145,12 @@
       <div class="portfolioBoxCon">
         <ul class="portfolioList">
           <li data-th-each="product: ${products}">
-            <a href="#" data-th-href="@{/product/detail(no=${product.no})}" class="item">
+            <a href="#" data-th-href="@{/mypage/productDetail(no=${product.no})}"
+               onclick="window.open(this.href, '_blank', 'width=1200, height=1000, top=Math.ceil(( window.outerHeight - 800 )/5) , left=Math.ceil(( window.outerWidth - 800 )/8'); return false;" class="item">
               <!-- bootstrap card -->
               <div class="row">
                 <div class="col-sm-6 col-md-4">
                   <div class="thumbnail">
-                    <div id="userBtn" >
-                      <button id="edit">수정하기</button>
-                      <button id="delete">삭제하기</button>
-                    </div>
                     <img data-th-src="@{/product/files/{path}(path=${product.thumbnail})}" alt="">
                     <!--                    <img src="../img/naver.png" alt="...">-->
                     <div class="caption">

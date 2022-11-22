@@ -25,8 +25,7 @@
   #detail-4 {
     display: flex;
     justify-content: center;
-    border : solid #c4c4c4 2px ;
-    border-radius: 4px;
+    border : solid #c4c4c4 1px ;
     min-height: 40vw;
     max-height: 40vw;
     margin-bottom: 0.5vw;
@@ -38,7 +37,7 @@
   }
 
   div > p {
-    word-break: keep-all;
+    word-break: break-word;
     margin-top: 1%;
     margin-left: 1%;
     margin-right: 1%;
@@ -55,8 +54,14 @@
   }
 
   .commonBorder {
-    height: 30px;
+    display: flex;
+    justify-content : center;
+    align-items: center;
+    height: 5vw;
+    font-size: 1.6vw;
+    padding-top: 3px;
   }
+
 
   #breadc {
     margin-top: 5%;
@@ -67,8 +72,7 @@
 
   #detail-5 {
     display: grid;
-    border : solid #c4c4c4 2px ;
-    border-radius: 4px;
+    border : solid #c4c4c4 1px ;
   }
 
   #detail-6 {
@@ -76,31 +80,32 @@
     grid-template-columns: 3.3fr 3.3fr 3.3fr;
     height: 20px;
   }
+
   #detail2 {
-    border : solid #c4c4c4 2px ;
+    border : solid #c4c4c4 1px ;
     border-radius: 4px;
     max-width: 60vw;
     min-width: 40vw;
   }
 
   #detail2-1 {
-    border-bottom: solid #c4c4c4 2px;
+    border-bottom: solid #c4c4c4 1px;
   }
 
   #detail2-2 {
-    border-bottom: solid #c4c4c4 2px;
+    border-bottom: solid #c4c4c4 1px;
   }
 
   #detail2-3 {
-    border-bottom: solid #c4c4c4 2px;
+    border-bottom: solid #c4c4c4 1px;
   }
 
   #detail2-4 {
-    border-bottom: solid #c4c4c4 2px;
+    border-bottom: solid #c4c4c4 1px;
   }
 
   #detail2-5 {
-    border-bottom: solid #c4c4c4 2px;
+    border-bottom: solid #c4c4c4 1px;
   }
 
   #detail2-6 {
@@ -132,13 +137,13 @@
   }
 
   #detail3-2 {
-    border-top: solid #c4c4c4 2px;
+    border-top: solid #c4c4c4 1px;
     margin-top: 15px;
     padding-top: 10px;
   }
 
   #top {
-    border : solid #c4c4c4 2px ;
+    border : solid #c4c4c4 1px ;
     border-radius: 4px;
     background-color: #f8f6f6;
     margin-left : 61%;
@@ -147,6 +152,7 @@
     padding-bottom: 1%;
     position: fixed;
     min-width: 30vw;
+    max-width: 30vw;
   }
 
   #top > div {
@@ -159,8 +165,6 @@
 
   #top p {
     margin-left: 0px;
-    font-size: 1vw;
-
   }
 
   .seller-infoprofile {
@@ -175,7 +179,7 @@
   #top .horizonLine {
     display: block;
     height: 10px;
-    border-bottom: solid 2px #c4c4c4;
+    border-bottom: solid 1px #c4c4c4;
     margin-left: 3%;
     margin-right: 3%;
     margin-bottom: 3%;
@@ -183,7 +187,7 @@
   }
 
   #top #title {
-    font-size: 1.1vw;
+    font-size: 1.5vw;
   }
 
   .product_images img {
@@ -209,7 +213,7 @@
     height: 100%;
   }
 
-  #buyOrAsk {
+  .buyOrAsk {
     text-align: center;
   }
 
@@ -250,20 +254,18 @@
   }
 
   .heart {
-    display: flex;
+    justify-items: center;
   }
 
   .heart div {
     display: inline;
-    font-size: 1.8vw;
-    margin-left: 5px;
-    margin-top: 3px;
+    margin: 0px 20px 0px 10px;
   }
 
-  #avgOfReviews {
-    display: inline;
-    font-size: 1.2vw;
+  #aboutReviews {
+    margin-left: 10px;
   }
+
 
   .star-rating {
     width: 101px;
@@ -273,7 +275,8 @@
     display: inline-block;
     height: 18px;
     overflow:hidden;
-    background:url('../img/reviewstar.png')no-repeat;
+    /*background:url('img/reviewstar.png')no-repeat;*/
+    background:url('static/img/reviewstar.png')no-repeat;
   }
 
   .star-rating span {
@@ -328,6 +331,11 @@
     width: 0%;
   }
 
+  #sellerIntro > p {
+    word-break: break-all;
+  }
+
+
 </style>
 </head>
 <body style="overflow-x: hidden">
@@ -347,28 +355,25 @@
         <div id="tab" style="overflow:scroll;">
           <ul id="horiScroll">
             <li data-th-each="file : ${product.attachedFiles}">
-<!--              <a data-th-href="@{/product/files/{path}(path=${file.filepath})}">-->
-                <img class="attached-image" data-th-src="@{/product/files/{path}(path=${file.filepath})}">
-<!--              </a>-->
+              <img data-th-if="${file.filepath != null}" class="attached-image" data-th-src="@{/product/files/{path}(path=${file.filepath})}">
             </li>
           </ul>
         </div>
       </div>
     </div>
-    <div class="commonBorder"></div>
+    <div class="commonBorder">
+      <div class="heart">
+        <img src="../img/deadheart.png" alt="heartClicked" width="25px" height="25px" >
+        <p hidden id="checkLike" data-th-value="${wishCheck}"></p>
+        <div id="wishCnt" data-th-text="${wishCount}"></div>
+      </div>
+        <img src="../img/star.png" width="25px" height="25px"/>
+      <span id="aboutReviews" data-th-text="${average} == null or ${count} == null ? ' 후기 없음' : ' ' + ${average} + ' 점 ( 후기 : ' + ${count} + ' 개 ) '">별점 평균</span>
+    </div>
 
   <div id="top">
-      <div class="heart">
-        <img src="../img/deadheart.png" alt="heartClicked" width="30px" height="33px" >
-        <p hidden id="checkLike" data-th-value="${wishCheck}"></p>
-      <div id="wishCnt" data-th-text="${wishCount}"></div>
-      </div>
-    <div><p id="title" class="head" data-th-text="${product.title}">제목</p></div>
+    <div style="word-break:break-all;"><p id="title" class="head" data-th-text="${product.title}">제목</p></div>
     <div><p class="head" data-th-text="${#numbers.formatInteger(product.price, 3, 'COMMA')} + ' 원'">가격</p></div>
-      <div>
-        <img src="../img/star.png" /><p id="avgOfReviews" class="head" data-th-text="${average} == null ? ' 후기 없음' : ' ' + ${average} + ' 점'">별점 평균</p></span>
-        <p class="head" id="reviewInfo" data-th-text="${count} == 0 ? '' : ' ( 후기 : ' + ${count} + '개 ) '">후기 개수</p>
-      </div>
 
     <div class="horizonLine"></div>
       <div id="seller-info">
@@ -384,16 +389,20 @@
 
     <div class="horizonLine"></div>
 
-    <div id="buyOrAsk">
+    <div data-th-if="${session.loginMember == null or session.loginMember.no != product.writer.no}" class="buyOrAsk">
       <button id="buybtn" type="submit" class="btn btn-default">구매하기</button>
-      <button type="button" class="btn btn-default"><a>문의하기</a></button>
+<!--      <button type="button" class="btn btn-default"><a>문의하기</a></button>-->
+      <button type="button" class="btn btn-default"><a data-th-href="@{/message/messageDetail(no=${product.writer.no})}">문의하기</a></button>
+    </div>
+    <div data-th-if="${session.loginMember != null and session.loginMember.no == product.writer.no}" class="buyOrAsk">
+      <button type="button" class="btn btn-default"><a href="/onemoa/mypage/productList">마이페이지에서 수정하기</a></button>
     </div>
   </div>
 </form>
 
   <div id="detail2">
     <div id="detail2-1" class="head"><p>서비스 설명</p></div>
-    <div id="detail2-2"><p data-th-utext="${product.content}">서비스 설명 내용</div>
+    <div id="detail2-2" style="word-break: break-all"><p data-th-utext="${product.content}" style="max-width: 100%">서비스 설명 내용</p></div>
     <div id="detail2-3" class="head"><p>수정 및 재진행</p></div>
     <div id="detail2-4"><p data-th-utext="${product.rule}">
       시안은 1개이며 간단한 레이아웃/텍스트 조정에 한해 무료 2회로 진행합니다.
@@ -429,19 +438,23 @@
     </div>
     <div id="detail3-2">
       <table id="reviewList">
-        <tr class="reviewLine" data-th-each="review : ${reviews}">
+        <tr class="reviewLine" data-th-each="orderReview : ${reviews}">
           <td id="starRow">
             <div class="star-rating">
-              <span data-th-if="${review.score == 5}" style="width:100%"></span>
-              <span data-th-if="${review.score == 4}" style="width:80%"></span>
-              <span data-th-if="${review.score == 3}" style="width:60%"></span>
-              <span data-th-if="${review.score == 2}" style="width:40%"></span>
-              <span data-th-if="${review.score == 1}" style="width:20%"></span>
+              <span data-th-if="${orderReview.score - 5 == 0}" style="width:100%"></span>
+              <span data-th-if="${orderReview.score - 4.5 == 0}" style="width:90%"></span>
+              <span data-th-if="${orderReview.score - 4 == 0}" style="width:80%"></span>
+              <span data-th-if="${orderReview.score - 3.5 == 0}" style="width:70%"></span>
+              <span data-th-if="${orderReview.score - 3 == 0}" style="width:60%"></span>
+              <span data-th-if="${orderReview.score - 2.5 == 0}" style="width:50%"></span>
+              <span data-th-if="${orderReview.score - 2 == 0}" style="width:40%"></span>
+              <span data-th-if="${orderReview.score - 1.5 == 0}" style="width:30%"></span>
+              <span data-th-if="${orderReview.score - 1 == 0}" style="width:20%"></span>
             </div>
-            <span><p data-th-value="${review.score}" data-th-text="${review.score}">후기 별점</p></span>
+            <span><p data-th-value="${orderReview.score}" data-th-text="${orderReview.score}">후기 별점</p></span>
           </td>
-          <td><p data-th-text="${review.content}">후기 내용</p></td>
-          <td><p id="rwCreatedDate" data-th-text="${review.createdDate}">작성일</p></td>
+          <td><p data-th-text="${orderReview.content}">후기 내용</p></td>
+          <td><p id="rwCreatedDate" data-th-text="${orderReview.createdDate}">작성일</p></td>
         </tr>
       </table>
     </div>
