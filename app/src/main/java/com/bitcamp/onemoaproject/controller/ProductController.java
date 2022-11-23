@@ -5,6 +5,7 @@ import com.bitcamp.onemoaproject.service.order.OrderReviewService;
 import com.bitcamp.onemoaproject.service.productService.ProductCategoryService;
 import com.bitcamp.onemoaproject.service.productService.ProductService;
 import com.bitcamp.onemoaproject.vo.Member;
+import com.bitcamp.onemoaproject.vo.order.OrderReview;
 import com.bitcamp.onemoaproject.vo.paging.Criteria;
 import com.bitcamp.onemoaproject.vo.paging.PageMaker;
 import com.bitcamp.onemoaproject.vo.product.AttachedFile;
@@ -99,20 +100,24 @@ public class ProductController {
   }
 
   @RequestMapping("list")
-  public ModelAndView list(Criteria cri, String code) {
+  public ModelAndView list(Criteria cri, String code) throws Exception {
 
     ModelAndView mav = new ModelAndView("product/list");
 
     PageMaker pageMaker = new PageMaker();
     cri.setCategoryCode(code);
+    /*cri.setPerPageNum(5);*/
     pageMaker.setCri(cri);
     pageMaker.setTotalCount(productService.countProductListTotal(code));
     List<Map<String,Object>> products = productService.selectProductList(cri);
-
+    System.out.println("products = " + products);
+  
+    System.out.println("productService = " + productService.findByAll());
+    mav.addObject("code", code);
+    mav.addObject("wishes", productService.findByAll());
     mav.addObject("products", products);
     mav.addObject("pageMaker", pageMaker);
     mav.addObject("productCategories", productCategoryService.list());
-
 
     return mav;
   }
@@ -217,6 +222,7 @@ public class ProductController {
     }
   }
 
+
   @GetMapping("delete")
   public String delete(
           @RequestParam("no") int no,
@@ -230,30 +236,6 @@ public class ProductController {
 
     return "redirect:list";
   }
-
-//  @GetMapping("fileDelete")
-//  public String fileDelete(
-//          @RequestParam("no") int no,
-//          HttpSession session)
-//          throws Exception {
-//
-//    AttachedFile attachedFile = productService.getAttachedFile(no);
-//
-//    // 게시글의 작성자가 로그인 사용자인지 검사한다. (남의 것 삭제할 수 있으면 안되니까)
-//    Member loginMember = (Member) session.getAttribute("loginMember");
-//    Product product = productService.get(attachedFile.getProductNo());
-//
-//    if (product.getWriter().getNo() != loginMember.getNo()) {
-//      throw new Exception("게시글 작성자가 아닙니다.");
-//    }
-//
-//    // 첨부파일을 삭제한다.
-//    if (!productService.deleteAttachedFile(no)) {
-//      throw new Exception("게시글 첨부파일 삭제 실패!");
-//    }
-//
-//    return "redirect:detail?no=" + product.getNo();
-//  }
 
   @ResponseBody
   @GetMapping("getSubCategories")

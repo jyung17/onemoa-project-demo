@@ -8,8 +8,9 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
   <script src="/onemoa/js/login.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"/>
-  <link rel="shortcut icon" href="./img/favicon3.ico">
-  <link rel="icon" href="./img/favicon3.ico">
+  <link rel="icon" href="./img/favicon1.ico">
+  <link rel="shortcut icon" href="./img/favicon1.ico">
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body style="overflow-x: hidden">
   <div data-th-replace="/fragments/nav.html :: fragment-nav"></div>
@@ -80,7 +81,7 @@
         <div class="swiper-wrapper">
           <div class="swiper-slide" data-th-each="contest: ${contests}">
             <ul>
-              <li><img data-th-src="@{/contest/files/{path}(path=${contest.thumbNail})}" style="height: auto"></li>
+              <li><img data-th-src="@{/contest/files/{path}(path=${contest.thumbNail})}" style="height: 350px"></li>
               <li><p data-th-text="${contest.contCategory.categoryName}" style="font-size: 1vw; color: gray;"></p></li>
               <li><p data-th-text="${contest.title}" style="font-size: 1.2vw"></p></li>
             </ul>
@@ -91,20 +92,31 @@
         <div class="swiper-button-prev" style="position: absolute; top: 40%; left: 4.5%;"></div>
     </div>
 
-<!--    <div class="mainReview">-->
-<!--      <p class="reviews">ONEMOA 에서 거래한 다른 사람들의 <span>다양한 리얼 후기를 만나보세요. </span></p>-->
-<!--      <div class="gallery">-->
-<!--        <ul class="clearfix">-->
-<!--          <li data-th-each="review : ${reviews}">-->
-<!--              <img data-th-each="file : ${review.productReviewAttachedFiles}" src="./img/mainre.png" data-th-src="@{product/reviewfiles/{path}(path=${file.filepath})}" style="display: inline-block; width: 100%; height: 200px;">-->
-<!--              <p class="rev" data-th-text="${review.writer.nickname}" style="font-size: 1vw; color: gray;"></p>-->
-<!--              <p class="rev" data-th-text="${'별점'+ review.score}" style="font-size: 1vw; color: blue;"></p>-->
-<!--              <p data-th-text="${review.title}" style="font-size: 1vw;"></p>-->
-<!--              <p data-th-text="${review.content}"></p>-->
-<!--          </li>-->
-<!--        </ul>-->
-<!--      </div>-->
-<!--    </div>-->
+    <div class="mainReview">
+      <p class="reviews">ONEMOA 에서 거래한 다른 사람들의 <span>다양한 리얼 후기를 만나보세요. </span></p>
+      <div class="gallery">
+        <ul class="clearfix">
+          <li data-th-each="review : ${reviews}">
+              <img data-th-each="file : ${review.orderReviewAttachedFiles}" src="./img/mainre.png" data-th-src="@{product/reviewfiles/{path}(path=${file.filepath})}" style="display: inline-block; width: 100%; height: 200px;">
+              <p class="rev" data-th-text="${review.writer.nickname}" style="font-size: 1vw; color: gray;"></p>
+              <!-- <p class="rev" data-th-text="${'별점'+ review.score}" style="font-size: 1vw; color: blue;"></p> -->
+              <div class="star-rating">
+                <span data-th-if="${review.score - 5 == 0}" style="width:100%"></span>
+                <span data-th-if="${review.score - 4.5 == 0}" style="width:90%"></span>
+                <span data-th-if="${review.score - 4 == 0}" style="width:80%"></span>
+                <span data-th-if="${review.score - 3.5 == 0}" style="width:70%"></span>
+                <span data-th-if="${review.score - 3 == 0}" style="width:60%"></span>
+                <span data-th-if="${review.score - 2.5 == 0}" style="width:50%"></span>
+                <span data-th-if="${review.score - 2 == 0}" style="width:40%"></span>
+                <span data-th-if="${review.score - 1.5 == 0}" style="width:30%"></span>
+                <span data-th-if="${review.score - 1 == 0}" style="width:20%"></span>
+              </div>
+              <p data-th-text="${review.title}" style="font-size: 1vw;"></p>
+              <p data-th-text="${review.content}" style="font-size: 1vw;"></p>
+          </li>
+        </ul>
+      </div>
+    </div>
 
 
   <footer data-th-replace="/fragments/footer.html :: fragment-footer"></footer>

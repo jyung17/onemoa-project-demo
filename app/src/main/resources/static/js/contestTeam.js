@@ -131,7 +131,7 @@ function portfolioBoxChange() {
   let selectPortfolioText = document.getElementById("xx-portfolioBox").options[document.getElementById("xx-portfolioBox").selectedIndex].text;
   let aList = "";
   aList += "<li value='ptNo" + selectPortfolioNumber + "'>" +
-      "<a href='/onemoa/mypage/firstportfolio?ptNo=" + selectPortfolioNumber + "'" + "onClick=\"window.open(this.href, '', 'width=1000px, height=1080px')\"; target=\"_blank\">" + selectPortfolioText + "</a>" + "&nbsp&nbsp&nbsp" + "<span class='portfolioDeleteBtn' id='ptNo" + selectPortfolioNumber + "'" + ">삭제</span>" + "</li>";
+      "<a href='/onemoa/mypage/firstportfolio?ptNo=" + selectPortfolioNumber + "'" + "onClick=\"window.open(this.href, '', 'width=1000px, height=1080px')\"; target=\"_blank\">" + selectPortfolioText + "</a>" + "&nbsp&nbsp&nbsp" + "<span class='portfolioDeleteBtn' id='ptNo" + selectPortfolioNumber + "'" + " style='cursor: pointer'>삭제</span>" + "</li>";
   $("#innerPortfolio").append(aList);
 
   $(".portfolioDeleteBtn").click(function (e) {
@@ -338,7 +338,7 @@ function teamReaderDetail() {
                 + "<span>" + result2[i].size + "</span>"
             fieldSize += Number(result2[i].size);
           }
-          fieldHead = "<li>" +  "모집인원 총" + fieldSize + "명 " + fieldList + "</li>" + "<button class=\"tmm\" onclick=\"dis5()\">팀원 지원하기</button>"
+          fieldHead = "<li>" +  "모집인원 총" + fieldSize + "명 " + fieldList + "</li>" + "<button class=\"tmm\" onclick=\"dis5()\">팀원 지원하기</button>";
           $("#xx-readerField").html(fieldHead);
         },
       });
@@ -373,12 +373,12 @@ function fieldMemberList() {
                 "</li>" +
                 "<li>" +
                 "<p>" + result3[i].contestTeamFieldMembers[j].cont + "</p>" +
-                // "<p><a href=\"#\">수정</a><a href=\"#\">삭제</a></p>" +
                 "</li>" +
                 "<li>" +
                 "<p>" +
                 "<a href='#' id='tfmno-" + result3[i].contestTeamFieldMembers[j].tfmno + "' onclick='dis7(this.id, this.text)'>지원자보기</a>" +
-                "</p></li></ul>";
+                "</p>" + "<p>" + "<a href='/onemoa/message/messageDetail?no=" + result3[i].contestTeamFieldMembers[j].tfmno + "'>메시지</button>" +
+                "</p>" + "</li></ul>";
           }
           else if (type == "미승인") {
             console.log("if");
@@ -390,12 +390,12 @@ function fieldMemberList() {
                 "</li>" +
                 "<li>" +
                 "<p>" + result3[i].contestTeamFieldMembers[j].cont + "</p>" +
-                // "<p><a href=\"#\">수정</a><a href=\"#\">삭제</a></p>" +
                 "</li>" +
                 "<li>" +
                 "<p>" +
                 "<a href='#' id='tfmno-" + result3[i].contestTeamFieldMembers[j].tfmno + "' onclick='dis7(this.id, this.text)'>지원자보기</a>" +
-                "</p></li></ul>";
+                "</p>" + "<p>" + "<a href='/onemoa/message/messageDetail?no=" + result3[i].contestTeamFieldMembers[j].tfmno + "'>메시지</button>" +
+                "</p>" + "</li></ul>";
           } else {
             console.log("else");
             console.log(type);
@@ -406,15 +406,16 @@ function fieldMemberList() {
                 "</li>" +
                 "<li>" +
                 "<p>" + result3[i].contestTeamFieldMembers[j].cont + "</p>" +
-                // "<p><a href=\"#\">수정</a><a href=\"#\">삭제</a></p>" +
                 "</li>" +
                 "<li>" +
-                "<p style='border:#6F9475; background-color:#6F9475; color:#ffffff'>" +
-                "<a href='#' id='tfmno-" + result3[i].contestTeamFieldMembers[j].tfmno + "' onclick='dis9(this.id, this.text)'>팀원취소</a>" +
-                "</p></li></ul>";
+                "<p>" +
+                "<a href='#' id='tfmno-" + result3[i].contestTeamFieldMembers[j].tfmno + "' onclick='dis9(this.id, this.text)' style='border:#6F9475; background-color:#6F9475; color:#ffffff;'>팀원취소</a>" +
+                "</p>" + "<p>" + "<a href='/onemoa/message/messageDetail?no=" + result3[i].contestTeamFieldMembers[j].tfmno + "'>메시지</button>" +
+                "</p>" + "</li></ul>";
           }
         }
       }
+      console.log(fieldMember);
       $("#xx-fieldMemberUl").html(fieldMember);
     },
   });

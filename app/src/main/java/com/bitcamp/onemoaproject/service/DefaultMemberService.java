@@ -86,20 +86,20 @@ public class DefaultMemberService implements MemberService {
   public void modifyPasswd(String email, String newPassword) {
     memberDao.modifyPasswd(email, newPassword);
   }
-
+  
   @Override
   public Member getNickName(String nickname) {
-    return null;
+    return memberDao.findByNickName(nickname);
   }
 
   @Override
   public Member getIdEmail(String name, String email) {
-    return null;
+    return memberDao.findByIdEmail(name, email);
   }
 
   @Override
-  public boolean updatePwd(Member member) {
-    return false;
+  public boolean updatePwd(String email, String password) {
+    return memberDao.modifyPasswd(email, password) > 0;
   }
 
   // 사용자 패스워드 체크

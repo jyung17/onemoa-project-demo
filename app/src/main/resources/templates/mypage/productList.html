@@ -5,6 +5,8 @@
   <title>onemoa mypage</title>
   <link href="../css/onemoa.css" rel="stylesheet">
   <link href="../css/onemoaMypage.css" rel="stylesheet">
+  <link rel="icon" href="../img/favicon1.ico">
+  <link rel="shortcut icon" href="../img/favicon1.ico">
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
   <script src="/onemoa/js/login.js"></script>
   <script src="../js/onemoa.js"></script>
@@ -127,7 +129,7 @@
         <li><a class="font2" href="/onemoa/mypage/salesList">판매 관리</a></li>
         <li><a class="font" href="/onemoa/mypage/productList">상품 관리</a></li>
         <li><a class="font2" href="">결제내역</a></li>
-        <li><a class="font2" href="">1:1 문의내역</a></li>
+        <li><a class="font2" href="/onemoa/mypage/qnaList">1:1 문의내역</a></li>
         <li class="menu">
           <a class="font2" href="myinfo">계정설정</a>
           <ul class="hide">
@@ -171,17 +173,11 @@
                 </div>
               </div>
             </a>
-<!--            <a href='portfolioDetail?ptNo=1' data-th-href="@{portfolioDetail?(ptNo=${portfolio.ptNo})}"><img data-th-src="${'/onemoa/portfolio/files/'+ portfolio.attachedFiles[0].filepath}" style="width: 255px; height: 255px;"></a>-->
           </li>
         </ul>
       </div>
     </div>
-
-
     <ul class="portfolioList">
-<!--      <li data-th-each="portfolio : ${portfolios}">-->
-<!--        <a href="firstportfolio?ptNo=1" onClick="window.open(this.href, '', 'width=1000px, height=1080px')"; target="_blank"  data-th-href="@{firstportfolio?(ptNo=${portfolio.ptNo})}">- https://onemoa/portfolio1</a>-->
-<!--      </li>-->
     </ul>
 
   </li>
